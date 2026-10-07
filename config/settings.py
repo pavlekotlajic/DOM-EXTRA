@@ -8,8 +8,10 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'domextra-dev-secret-change-me')
 DEBUG = os.getenv('DJANGO_DEBUG', '1') == '1'
 ALLOWED_HOSTS = [h.strip() for h in os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(',') if h.strip()]
-
-INSTALLED_APPS = ['shop']
+INSTALLED_APPS = [
+    'django.contrib.staticfiles',
+    'shop',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
