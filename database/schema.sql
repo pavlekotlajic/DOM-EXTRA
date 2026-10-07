@@ -1,0 +1,238 @@
+CREATE TABLE IF NOT EXISTS settings (
+  id TINYINT UNSIGNED NOT NULL PRIMARY KEY,
+  firm VARCHAR(180) NOT NULL,
+  address VARCHAR(220) NOT NULL,
+  city VARCHAR(120) NOT NULL,
+  pib VARCHAR(32) NOT NULL,
+  mb VARCHAR(32) NOT NULL,
+  account VARCHAR(64) NOT NULL,
+  official_mail VARCHAR(180) NOT NULL,
+  invoice_prefix VARCHAR(20) NOT NULL DEFAULT 'DE',
+  payment_days INT NOT NULL DEFAULT 5,
+  phone VARCHAR(50) NOT NULL,
+  second_phone VARCHAR(50) NULL,
+  working_hours VARCHAR(180) NULL,
+  order_seq INT NOT NULL DEFAULT 1001,
+  invoice_seq INT NOT NULL DEFAULT 1001
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS admins (
+  id VARCHAR(64) PRIMARY KEY,
+  username VARCHAR(120) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(50) NOT NULL DEFAULT 'admin',
+  created_at DATETIME(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS buyers (
+  id VARCHAR(64) PRIMARY KEY,
+  company VARCHAR(180) NOT NULL,
+  email VARCHAR(180) NOT NULL,
+  address VARCHAR(220) NOT NULL,
+  city VARCHAR(120) NOT NULL,
+  pib VARCHAR(32) NOT NULL,
+  mb VARCHAR(32) NOT NULL,
+  account VARCHAR(64) NOT NULL,
+  class VARCHAR(2) NOT NULL DEFAULT 'A',
+  payment_days INT NOT NULL DEFAULT 30,
+  special_discount DECIMAL(7,2) NOT NULL DEFAULT 0,
+  username VARCHAR(120) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  active TINYINT(1) NOT NULL DEFAULT 1,
+  created_at DATETIME(6) NOT NULL,
+  updated_at DATETIME(6) NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS brands (
+  id VARCHAR(64) PRIMARY KEY,
+  name VARCHAR(120) NOT NULL UNIQUE,
+  category VARCHAR(120) NULL,
+  active TINYINT(1) NOT NULL DEFAULT 1,
+  created_at DATETIME(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS product_groups (
+  name VARCHAR(120) NOT NULL PRIMARY KEY
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS products (
+  id VARCHAR(64) PRIMARY KEY,
+  name VARCHAR(220) NOT NULL,
+  description TEXT,
+  group_name VARCHAR(120) NOT NULL,
+  sku VARCHAR(80) NOT NULL UNIQUE,
+  barcode VARCHAR(50) NULL,
+  unit VARCHAR(30) NOT NULL DEFAULT 'kom',
+  pack_qty DECIMAL(12,3) NOT NULL DEFAULT 1,
+  pack_name VARCHAR(40) NOT NULL DEFAULT 'kom',
+  vp_price DECIMAL(14,2) NOT NULL DEFAULT 0,
+  mp_price DECIMAL(14,2) NOT NULL DEFAULT 0,
+  old_price DECIMAL(14,2) NOT NULL DEFAULT 0,
+  sale_until DATETIME NULL,
+  brand VARCHAR(120) NULL,
+  is_new TINYINT(1) NOT NULL DEFAULT 0,
+  long_desc TEXT,
+  gallery_json JSON NULL,
+  specs_json JSON NULL,
+  stock DECIMAL(14,3) NOT NULL DEFAULT 0,
+  weight_kg DECIMAL(12,3) NOT NULL DEFAULT 0,
+  action_discount DECIMAL(7,2) NOT NULL DEFAULT 0,
+  special_discount DECIMAL(7,2) NOT NULL DEFAULT 0,
+  advance_discount DECIMAL(7,2) NOT NULL DEFAULT 0,
+  logistics_discount DECIMAL(7,2) NOT NULL DEFAULT 0,
+  rating DECIMAL(4,2) NOT NULL DEFAULT 0,
+  image TEXT,
+  icon VARCHAR(30) DEFAULT '📦',
+  created_at DATETIME(6) NOT NULL,
+  updated_at DATETIME(6) NULL,
+  INDEX idx_products_group (group_name),
+  INDEX idx_products_brand (brand),
+  CONSTRAINT fk_products_group FOREIGN KEY (group_name) REFERENCES product_groups(name) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS coupons (
+  id VARCHAR(64) PRIMARY KEY,
+  code VARCHAR(60) NOT NULL UNIQUE,
+  description VARCHAR(255) NULL,
+  type VARCHAR(10) NOT NULL,
+  value DECIMAL(14,2) NOT NULL,
+  min_amount DECIMAL(14,2) NOT NULL DEFAULT 0,
+  max_uses INT NOT NULL DEFAULT 100,
+  used INT NOT NULL DEFAULT 0,
+  valid_until DATE NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS courier_settings (
+  id TINYINT UNSIGNED PRIMARY KEY,
+  free_from DECIMAL(14,2) NOT NULL DEFAULT 0,
+  def_weight DECIMAL(12,3) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS courier_zones (
+  kg DECIMAL(12,3) PRIMARY KEY,
+  price DECIMAL(14,2) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS sale_banner (
+  id TINYINT UNSIGNED PRIMARY KEY,
+  active TINYINT(1) NOT NULL DEFAULT 1,
+  title VARCHAR(255) NOT NULL,
+  text VARCHAR(500) NOT NULL,
+  cta VARCHAR(120) NOT NULL,
+  bg VARCHAR(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS locations (
+  id VARCHAR(64) PRIMARY KEY,
+  name VARCHAR(180) NOT NULL,
+  phone VARCHAR(80) NULL,
+  address VARCHAR(255) NOT NULL,
+  hours VARCHAR(255) NULL,
+  lat DECIMAL(10,7) NULL,
+  lng DECIMAL(10,7) NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS orders (
+  id VARCHAR(64) PRIMARY KEY,
+  number VARCHAR(80) NOT NULL UNIQUE,
+  invoice_number VARCHAR(80) NOT NULL UNIQUE,
+  channel VARCHAR(20) NOT NULL,
+  buyer_id VARCHAR(64) NULL,
+  buyer_name VARCHAR(180) NULL,
+  created_at DATETIME(6) NOT NULL,
+  status VARCHAR(40) NOT NULL,
+  customer_json JSON NULL,
+  subtotal DECIMAL(14,2) NOT NULL DEFAULT 0,
+  coupon_discount DECIMAL(14,2) NOT NULL DEFAULT 0,
+  gross DECIMAL(14,2) NOT NULL DEFAULT 0,
+  shipping_json JSON NULL,
+  base DECIMAL(14,2) NOT NULL DEFAULT 0,
+  vat DECIMAL(14,2) NOT NULL DEFAULT 0,
+  total DECIMAL(14,2) NOT NULL DEFAULT 0,
+  payment_method VARCHAR(80) NULL,
+  payment_due_date DATE NULL,
+  updated_at DATETIME(6) NULL,
+  INDEX idx_orders_created (created_at),
+  INDEX idx_orders_channel (channel),
+  INDEX idx_orders_buyer (buyer_id),
+  CONSTRAINT fk_orders_buyer FOREIGN KEY (buyer_id) REFERENCES buyers(id) ON UPDATE CASCADE ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS order_items (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  order_id VARCHAR(64) NOT NULL,
+  product_id VARCHAR(64) NULL,
+  sku VARCHAR(80) NULL,
+  name VARCHAR(220) NOT NULL,
+  qty DECIMAL(14,3) NOT NULL,
+  unit VARCHAR(30) NULL,
+  unit_price DECIMAL(14,2) NOT NULL DEFAULT 0,
+  line_total DECIMAL(14,2) NOT NULL DEFAULT 0,
+  gross DECIMAL(14,2) NOT NULL DEFAULT 0,
+  red DECIMAL(7,2) NOT NULL DEFAULT 0,
+  pos DECIMAL(7,2) NOT NULL DEFAULT 0,
+  ak DECIMAL(7,2) NOT NULL DEFAULT 0,
+  av DECIMAL(7,2) NOT NULL DEFAULT 0,
+  log DECIMAL(7,2) NOT NULL DEFAULT 0,
+  net_unit DECIMAL(14,2) NOT NULL DEFAULT 0,
+  net DECIMAL(14,2) NOT NULL DEFAULT 0,
+  INDEX idx_order_items_order (order_id),
+  CONSTRAINT fk_order_items_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS reviews (
+  id VARCHAR(64) PRIMARY KEY,
+  product_id VARCHAR(64) NOT NULL,
+  buyer VARCHAR(180) NOT NULL,
+  rating DECIMAL(3,1) NOT NULL,
+  comment TEXT NOT NULL,
+  date DATE NOT NULL,
+  verified TINYINT(1) NOT NULL DEFAULT 0,
+  INDEX idx_reviews_product (product_id),
+  CONSTRAINT fk_reviews_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS qa (
+  id VARCHAR(64) PRIMARY KEY,
+  product_id VARCHAR(64) NOT NULL,
+  question TEXT NOT NULL,
+  answer TEXT NOT NULL,
+  date DATE NOT NULL,
+  INDEX idx_qa_product (product_id),
+  CONSTRAINT fk_qa_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS contacts (
+  id VARCHAR(64) PRIMARY KEY,
+  name VARCHAR(120) NOT NULL,
+  email VARCHAR(180) NOT NULL,
+  phone VARCHAR(50) NULL,
+  topic VARCHAR(120) NULL,
+  message TEXT NOT NULL,
+  created_at DATETIME(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS shop_users (
+  id VARCHAR(64) PRIMARY KEY,
+  name VARCHAR(180) NOT NULL,
+  email VARCHAR(180) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  phone VARCHAR(50) NULL,
+  address VARCHAR(220) NULL,
+  city VARCHAR(120) NULL,
+  active TINYINT(1) NOT NULL DEFAULT 1,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE IF NOT EXISTS shop_wishlist (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id VARCHAR(64) NOT NULL,
+  product_id VARCHAR(64) NOT NULL,
+  created_at DATETIME NOT NULL,
+  UNIQUE KEY uq_shop_wishlist_user_product (user_id, product_id),
+  INDEX idx_shop_wishlist_user (user_id),
+  INDEX idx_shop_wishlist_product (product_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

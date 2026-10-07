@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B2B Portal — DOM EXTRA</title>
+<meta name="description" content="DOM EXTRA — distributer opreme za dom: sanitarija, keramika, grejanje i bela tehnika. Web shop i B2B portal.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..900&family=Roboto+Condensed:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/assets/style.css">
+
+
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="/b2b/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="B2B Portal — DOM EXTRA">
+<meta property="og:description" content="DOM EXTRA — distributer opreme za dom: sanitarija, keramika, grejanje i bela tehnika. Web shop i B2B portal.">
+<meta property="og:url" content="/b2b/">
+</head>
+<body class="theme-minotti page-b2b">
+<nav class="de-nav">
+  <a href="/" class="de-logo">DOM <span>EXTRA</span></a>
+  <ul class="de-nav-links">
+    <li><a href="/#brendovi">Brendovi</a></li>
+    <li><a href="/#kategorije">Kategorije</a></li>
+    <li><a href="/web-shop/">Web Shop</a></li>
+    <li><a href="/b2b/" class="active">B2B</a></li>
+    <li><a href="/o-nama/">O nama</a></li>
+    <li><a href="/kontakt/">Kontakt</a></li>
+  </ul>
+  <div class="de-nav-actions">
+    <a class="de-btn-b2b" href="/b2b/">B2B Pristup</a>
+    <a class="de-cart-btn" href="/web-shop/" aria-label="Korpa">🛒<span class="de-cart-count hidden" id="deCartCount">0</span></a>
+    <div class="de-hamb" onclick="document.getElementById('deMobileNav').classList.add('open')"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="de-mobile-nav" id="deMobileNav">
+  <button class="de-mobile-close" onclick="document.getElementById('deMobileNav').classList.remove('open')">✕</button>
+  <a href="/#brendovi">Brendovi</a>
+  <a href="/#kategorije">Kategorije</a>
+  <a href="/web-shop/">Web Shop</a>
+  <a href="/b2b/">B2B</a>
+  <a href="/o-nama/">O nama</a>
+  <a href="/kontakt/">Kontakt</a>
+</div>
+
+<main class="de-page-main">
+<section class="view" id="view-b2b">
+
+      <!-- LOGIN (pre pristupa portalu) -->
+      <div id="b2bLogin">
+        <div class="login-wrap">
+          <div class="login-card">
+            <div class="login-head">
+              <span class="dot" style="width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px rgba(177,253,0,.6)"></span>
+              <div><b>B2B Portal</b><small>Pristup za registrovane veleprodajne kupce</small></div>
+            </div>
+            <div class="login-body">
+              <div class="f-row one"><div class="f-g"><label>Korisničko ime</label><input id="lUser" placeholder="naziv.naloga" autocomplete="username"></div></div>
+              <div class="f-row one"><div class="f-g"><label>Lozinka</label><input id="lPass" type="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')b2bLogin()"></div></div>
+              <div class="login-err" id="lErr"></div>
+              <button class="cta" style="margin-top:6px" onclick="b2bLogin()">Prijavi se na portal</button>
+              <div class="mail-hint" style="margin-top:14px">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                <span>Pristupne parametre dodeljuje administrator nakon registracije VP kupca. Nemate nalog? Kontaktirajte komercijalu na <b>prodaja@domextra.net</b>.</span>
+              </div>
+              <div class="demo-cred">Demo pristup: <span class="mono">gradnja.komerc</span> / <span class="mono">gradnja2026</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PORTAL (posle prijave) -->
+      <div id="b2bApp" style="display:none">
+      <div class="topbar">
+        <div><h1>B2B Portal — porudžbenica</h1><p>Kupac je ulogovan sopstvenim pristupnim parametrima. Podaci i rabati se povlače iz sistema po klasifikaciji.</p></div>
+        <span class="badge"><span class="pulse"></span> Sesija aktivna</span>
+      </div>
+
+      <div class="buyer-strip" id="buyerStrip"></div>
+
+      <div id="myB2bPanel" style="display:none;margin-bottom:22px">
+        <div class="stat-grid" id="b2bFinance" style="margin-bottom:14px"></div>
+        <div class="card">
+          <div class="card-h"><h2>Moje porudžbenice</h2><div style="display:flex;gap:10px;align-items:center">
+            <select class="sel-in" id="myB2bFilter" onchange="renderMyB2B()" style="max-width:190px">
+              <option value="">Sve porudžbenice</option>
+              <option value="__unpaid">Samo neplaćene</option>
+              <option value="__overdue">Istekao rok uplate</option>
+            </select>
+            <span class="hint" id="myB2bCount"></span></div></div>
+          <div class="tbl-wrap">
+            <table class="b2b" style="min-width:820px">
+              <thead><tr><th>Broj</th><th>Datum</th><th>Iznos</th><th>Rok uplate</th><th>Status</th><th></th></tr></thead>
+              <tbody id="myB2bRows"></tbody>
+            </table>
+          </div>
+          <div class="status-legend">
+            <i class="st st-new">Novo</i> porudžbenica primljena &nbsp;·&nbsp;
+            <i class="st st-prep">U obradi</i> roba se priprema &nbsp;·&nbsp;
+            <i class="st st-sent">Poslato</i> roba je poslata/spremna &nbsp;·&nbsp;
+            <i class="st st-del">Isporučeno</i> roba preuzeta — čeka se uplata &nbsp;·&nbsp;
+            <i class="st st-paid">Plaćeno</i> uplata potvrđena &nbsp;·&nbsp;
+            <i class="st st-done">Realizovano</i> isporučeno i plaćeno — zatvoreno &nbsp;·&nbsp;
+            <i class="st st-storn">Stornirano</i> porudžbenica otkazana
+          </div>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="stack">
+          <div class="card">
+            <div class="card-h"><h2>Katalog proizvoda</h2><span class="hint" id="b2bCatCount"></span></div>
+            <div class="filters" style="padding:14px 20px 0">
+              <input class="f-in" id="bSearch" placeholder="Pretraga: naziv, SKU, barkod..." oninput="renderB2BRows()">
+              <select class="sel-in" id="grupaFilter" style="max-width:170px" onchange="renderB2BRows()"></select>
+              <select class="sel-in" id="stockFilter" style="max-width:170px" onchange="renderB2BRows()">
+                <option value="">Svako stanje</option>
+                <option value="ok">Na stanju</option>
+                <option value="low">Na minimumu (≤10)</option>
+                <option value="out">Nema na stanju</option>
+              </select>
+            </div>
+            <div class="tbl-wrap" id="catWrap">
+              <table class="b2b">
+                <thead><tr>
+                  <th>Slika</th><th>SKU / Barkod</th><th>Naziv / Opis</th><th>Stanje</th><th>Količina</th><th>JM</th><th>VP cena</th><th>Red. rabat</th><th>Pos. rabat</th><th>Akc. rabat</th><th>Av. rabat</th><th>Rabat log.</th><th>Neto cena</th>
+                </tr></thead>
+                <tbody id="b2bRows"></tbody>
+              </table>
+            </div>
+            <div class="b2b-cards" id="b2bCards"></div>
+          </div>
+        </div>
+
+        <div class="sum">
+          <div class="card">
+            <div class="card-h"><h2>Porudžbenica</h2><span class="hint" id="b2bCount">0 stavki</span></div>
+            <div class="card-b">
+              <label class="avans-row">
+                <input type="checkbox" id="avansChk" checked onchange="renderB2BRows();renderB2BCart()">
+                <div><b>Avansno plaćanje</b><span id="avansHint">Valuta: uplata 5 dana · avansni rabat se obračunava</span></div>
+              </label>
+              <label class="avans-row">
+                <input type="checkbox" id="licnoChk" onchange="syncLicno();renderB2BRows();renderB2BCart()">
+                <div><b>Lično preuzimanje robe</b><span id="licnoHint">Nije čekirano — isporuka po dogovoru, bez logističkog rabata</span></div>
+              </label>
+              <div class="f-g" id="b2bShipWrap" style="margin-bottom:14px">
+                <label style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:5px;display:block">Način isporuke</label>
+                <select class="sel-in" id="b2bShip" style="max-width:none" onchange="syncShip();renderB2BRows();renderB2BCart()">
+                  <option value="dostava">Dostava sopstvenim vozilom</option>
+                  <option value="kurir">Kurirska služba (po cenovniku)</option>
+                  <option value="licno">Lično preuzimanje</option>
+                </select>
+              </div>
+              <div id="b2bCart"><div class="empty">Unesite količine u katalogu.</div></div>
+              <div id="b2bTots" style="display:none">
+                <div class="tot-row"><span>Vrednost bez rabata</span><span class="mono" id="bGross">0,00</span></div>
+                <div class="tot-row"><span id="bRabRedL">Redovni rabat</span><span class="mono" id="bRabRed">−0,00</span></div>
+                <div class="tot-row" id="rowRabPos"><span>Poseban rabat</span><span class="mono" id="bRabPos">−0,00</span></div>
+                <div class="tot-row"><span>Akcijski rabat</span><span class="mono" id="bRabAk">−0,00</span></div>
+                <div class="tot-row" id="rowRabAv"><span>Avansni rabat</span><span class="mono" id="bRabAv">−0,00</span></div>
+                <div class="tot-row" id="rowRabLog"><span>Logistički rabat</span><span class="mono" id="bRabLog">−0,00</span></div>
+                <div class="tot-row" id="rowShip" style="display:none"><span>Dostava <small id="bShipNote" style="color:var(--muted)"></small></span><span class="mono" id="bShip">0,00</span></div>
+                <div class="tot-row"><span>Osnovica</span><span class="mono" id="bBase">0,00</span></div>
+                <div class="tot-row"><span>PDV 20%</span><span class="mono" id="bVat">0,00</span></div>
+                <div class="tot-row big"><span>Za uplatu</span><span class="mono" id="bTotal">0,00 RSD</span></div>
+                <div class="tot-row" style="color:var(--muted);font-size:12px"><span>Valuta plaćanja</span><span id="bValuta">5 dana (avans)</span></div>
+              </div>
+              <div id="b2bNote"></div>
+              <button class="cta" id="b2bConfirm" disabled onclick="confirmB2B()">Potvrdi i formiraj predračun</button>
+              <div class="mail-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
+                <span>Po potvrdi kupca, predračun se dostavlja <b>kupcu</b> i na <b>oficijalni mail sajta</b>. Rezervisane količine se skidaju sa stanja.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div><!-- /b2bApp -->
+    </section>
+
+    <!-- ============ ADMIN ============ -->
+</main>
+<div class="overlay" id="prodOverlay" onclick="if(event.target===this)closeProduct()"></div>
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()"></div>
+
+<!-- ===== MODAL: PREDRAČUN ===== -->
+<div class="overlay" id="docOverlay" onclick="if(event.target===this)closeDoc()">
+  <div class="doc">
+    <div class="doc-tools">
+      <b id="docTitle">Predračun</b>
+      <div class="grp">
+        <button class="tool-btn" onclick="window.print()">Štampaj / PDF</button>
+        <button class="tool-btn green" onclick="sendDoc()">Pošalji na mejlove</button>
+        <button class="tool-btn" onclick="closeDoc()">Zatvori</button>
+      </div>
+    </div>
+    <div class="doc-body" id="docBody"></div>
+  </div>
+</div>
+
+<div id="compareBar" class="compare-bar" style="display:none"></div>
+<div class="toast" id="toast"><span class="tick">✓</span><span id="toastMsg"></span></div>
+
+
+
+<!-- ═══════════ O NAMA ═══════════ -->
+
+<footer class="de-footer">
+  <div class="de-footer-grid">
+    <div>
+      <div class="de-footer-logo">DOM EXTRA</div>
+      <p class="de-footer-desc">Vaš pouzdani distributer premium opreme za dom. Ovlašćeni zastupnik vodećih svetskih brendova.</p>
+      <div class="de-social-row">
+        <a class="de-social-link ig" href="https://instagram.com/domextra" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="de-social-link fb" href="https://facebook.com/domextra" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg></a>
+        <a class="de-social-link yt" href="https://youtube.com/@domextra" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.77-1.77C19.32 5.13 12 5.13 12 5.13s-7.32 0-8.83.4A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.77 1.77c1.51.4 8.83.4 8.83.4s7.32 0 8.83-.4a2.5 2.5 0 0 0 1.77-1.77C23 15.2 23 12 23 12zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+      </div>
+    </div>
+    <div class="de-footer-col">
+      <h4>Brzi linkovi</h4>
+      <ul class="de-footer-links">
+        <li><a href="/web-shop/">Web Shop</a></li>
+        <li><a href="/b2b/">B2B Portal</a></li>
+        <li><a href="/o-nama/">O nama</a></li>
+        <li><a href="/kontakt/">Kontakt</a></li>
+        <li><a onclick="openLocations()">Naše lokacije</a></li>
+      </ul>
+    </div>
+    <div class="de-footer-col">
+      <h4>Informacije</h4>
+      <ul class="de-footer-links">
+        <li><a onclick="openLegal('uslovi')">Uslovi prodaje</a></li>
+        <li><a onclick="openLegal('reklamacije')">Reklamacije i povraćaj</a></li>
+        <li><a onclick="openLegal('privatnost')">Politika privatnosti</a></li>
+        <li><a onclick="openLegal('faq')">Često postavljana pitanja</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="de-footer-bottom">
+    <p>© 2026 DOM EXTRA DOO · Sva prava zadržana</p>
+    <p>Web Shop &amp; B2B Order Modul</p>
+    <button onclick="openAdmin()" style="position:absolute;right:0;bottom:0;opacity:0;width:60px;height:18px;cursor:default;" aria-hidden="true" tabindex="-1">admin</button>
+  </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="/assets/app.js?v=20261003-b2bfix4" defer></script>
+<script src="/assets/backend-bridge.js?v=20261003-b2bfix4" defer></script>
+<script src="/assets/cart-runtime.js?v=20261003-final6" defer></script>
+</body>
+</html>

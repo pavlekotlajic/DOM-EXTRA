@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Shop — DOM EXTRA</title>
+<meta name="description" content="DOM EXTRA — distributer opreme za dom: sanitarija, keramika, grejanje i bela tehnika. Web shop i B2B portal.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..900&family=Roboto+Condensed:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/assets/style.css">
+
+
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="/web-shop/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Web Shop — DOM EXTRA">
+<meta property="og:description" content="DOM EXTRA — distributer opreme za dom: sanitarija, keramika, grejanje i bela tehnika. Web shop i B2B portal.">
+<meta property="og:url" content="/web-shop/">
+</head>
+<body class="theme-minotti page-shop">
+<nav class="de-nav">
+  <a href="/" class="de-logo">DOM <span>EXTRA</span></a>
+  <ul class="de-nav-links">
+    <li><a href="/#brendovi">Brendovi</a></li>
+    <li><a href="/#kategorije">Kategorije</a></li>
+    <li><a href="/web-shop/" class="active">Web Shop</a></li>
+    <li><a href="/b2b/">B2B</a></li>
+    <li><a href="/o-nama/">O nama</a></li>
+    <li><a href="/kontakt/">Kontakt</a></li>
+  </ul>
+  <div class="de-nav-actions">
+    <a class="de-btn-b2b" href="/b2b/">B2B Pristup</a>
+    <a class="de-cart-btn" href="/web-shop/" aria-label="Korpa">🛒<span class="de-cart-count hidden" id="deCartCount">0</span></a>
+    <div class="de-hamb" onclick="document.getElementById('deMobileNav').classList.add('open')"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="de-mobile-nav" id="deMobileNav">
+  <button class="de-mobile-close" onclick="document.getElementById('deMobileNav').classList.remove('open')">✕</button>
+  <a href="/#brendovi">Brendovi</a>
+  <a href="/#kategorije">Kategorije</a>
+  <a href="/web-shop/">Web Shop</a>
+  <a href="/b2b/">B2B</a>
+  <a href="/o-nama/">O nama</a>
+  <a href="/kontakt/">Kontakt</a>
+</div>
+
+<main class="de-page-main">
+<section class="view active" id="view-shop">
+      <div class="topbar">
+        <div><h1>Web Shop porudžbina</h1><p>Maloprodaja — kupac bira artikle, isporuku i način plaćanja. Predračun ide na mail sajta i mail kupca.</p></div>
+        <div id="acctBtns" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"></div>
+      </div>
+
+      <div id="acctPanel" style="display:none;margin-bottom:22px"></div>
+      <div id="abandonBanner" style="display:none"></div>
+      <div id="saleBannerWrap"></div>
+
+      <div id="heroSections" class="hero-wrap"></div>
+
+      <div class="split">
+        <div class="stack">
+          <div class="card">
+            <div class="card-h"><h2>Artikli</h2><span class="hint" id="shopGridCount"></span></div>
+            <div class="card-b">
+              <div class="filters">
+                <input class="f-in" id="fSearch" placeholder="Pretraga po nazivu ili šifri..." oninput="renderShopGrid()">
+                <select class="sel-in" id="fGrupa" onchange="renderShopGrid()"></select>
+                <select class="sel-in" id="fSort" onchange="renderShopGrid()">
+                  <option value="">Sortiranje</option>
+                  <option value="pa">Cena rastuće</option>
+                  <option value="pd">Cena opadajuće</option>
+                  <option value="nm">Naziv A–Š</option>
+                  <option value="rt">Najbolje ocenjeno</option>
+                  <option value="nw">Najnovije</option>
+                </select>
+              </div>
+              <div class="filters-adv">
+                <div class="fa-group">
+                  <label>Cena od</label>
+                  <input class="f-in" id="fPriceMin" type="number" min="0" placeholder="0" oninput="renderShopGrid()">
+                </div>
+                <div class="fa-group">
+                  <label>Cena do</label>
+                  <input class="f-in" id="fPriceMax" type="number" min="0" placeholder="∞" oninput="renderShopGrid()">
+                </div>
+                <div class="fa-chips">
+                  <button class="chip" id="chipAkc" onclick="toggleChip('chipAkc');renderShopGrid()">🔥 Samo akcije</button>
+                  <button class="chip" id="chipNew" onclick="toggleChip('chipNew');renderShopGrid()">✨ Samo novo</button>
+                  <button class="chip" id="chipStock" onclick="toggleChip('chipStock');renderShopGrid()">✓ Samo na stanju</button>
+                  <button class="chip-clear" onclick="saveCurrentSearch()" title="Sačuvajte ovu kombinaciju filtera">🔖 Sačuvaj pretragu</button>
+                  <button class="chip-clear" onclick="clearFilters()">Resetuj filtere</button>
+                </div>
+              </div>
+              <div class="p-grid" id="shopGrid"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-h"><h2>Podaci kupca</h2></div>
+            <div class="card-b">
+              <div class="f-row">
+                <div class="f-g"><label>Ime i prezime</label><input id="cName" placeholder="Petar Petrović"></div>
+                <div class="f-g"><label>Telefon</label><input id="cPhone" placeholder="06x xxx xxxx"></div>
+              </div>
+              <div class="f-row">
+                <div class="f-g"><label>E-mail kupca</label><input id="cMail" type="email" placeholder="kupac@mail.com"></div>
+                <div class="f-g"><label>Grad</label><input id="cCity" placeholder="Beograd"></div>
+              </div>
+              <div class="f-row one">
+                <div class="f-g"><label>Adresa za isporuku</label><input id="cAddr" placeholder="Ulica i broj"></div>
+              </div>
+              <div class="f-row one">
+                <div class="f-g"><label class="check-line"><input type="checkbox" id="cFirma" onchange="toggleFirmaPolja()"> <span>Račun za pravno lice (faktura sa PIB-om)</span></label></div>
+              </div>
+              <div id="firmaPolja" style="display:none">
+                <div class="f-row">
+                  <div class="f-g"><label>Naziv firme</label><input id="cFirma1" placeholder="Naziv pravnog lica"></div>
+                  <div class="f-g"><label>PIB</label><input id="cPib" placeholder="9 cifara"></div>
+                </div>
+                <div class="f-row">
+                  <div class="f-g"><label>Matični broj</label><input id="cMb" placeholder="8 cifara"></div>
+                  <div class="f-g"><label>Adresa firme (sedište)</label><input id="cFirmaAddr" placeholder="Ulica, grad"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-h"><h2>Način isporuke</h2></div>
+            <div class="card-b"><div class="opt-grid" id="shipOpts">
+              <label class="opt sel"><input type="radio" name="ship" value="lično" checked><div><b>Lično preuzimanje</b><span>Preuzimanje u maloprodajnom objektu — bez troška isporuke</span></div></label>
+              <label class="opt"><input type="radio" name="ship" value="dostava"><div><b>Dostava (sopstvena)</b><span>Isporuka našim vozilom na adresu kupca</span></div></label>
+              <label class="opt"><input type="radio" name="ship" value="kurir"><div><b>Kurirska služba</b><span>Slanje kurirskom službom — trošak po cenovniku kurira</span></div></label>
+            </div></div>
+          </div>
+
+          <div class="card">
+            <div class="card-h"><h2>Način plaćanja</h2></div>
+            <div class="card-b"><div class="opt-grid" id="payOpts">
+              <label class="opt sel"><input type="radio" name="pay" value="pouzećem" checked><div><b>Plaćanje prilikom preuzimanja</b><span>Gotovinom kuriru ili na kasi pri preuzimanju</span></div></label>
+              <label class="opt"><input type="radio" name="pay" value="IPS"><div><b>IPS skeniraj</b><span>Instant plaćanje skeniranjem IPS QR koda iz m-banking aplikacije</span></div></label>
+              <label class="opt"><input type="radio" name="pay" value="kartica"><div><b>Platna kartica</b><span>Online plaćanje karticom (Visa, Mastercard, Dina)</span></div></label>
+              <label class="opt"><input type="radio" name="pay" value="uplatnica"><div><b>Uplata na račun (uplatnica)</b><span>Opšta uplatnica / nalog za prenos po predračunu — popunjena uplatnica se nalazi na predračunu</span></div></label>
+              <label class="opt"><input type="radio" name="pay" value="rate"><div><b>Plaćanje na rate</b><span>Banke partneri (Banca Intesa, Raiffeisen) — za iznos preko 10.000 RSD, 3–24 mesečne rate, sa obračunom kamate banke</span></div></label>
+            </div>
+            <div id="cardPanel" style="display:none">
+              <div class="card-pay">
+                <div class="cp-head"><b>Podaci o kartici</b><span>Priprema za integraciju sa payment procesorom — podaci se u demo režimu ne šalju</span></div>
+                <div class="f-row one">
+                  <div class="f-g"><label>Broj kartice</label><input id="ccNum" inputmode="numeric" placeholder="0000 0000 0000 0000" maxlength="19" oninput="ccFormat(this)"></div>
+                </div>
+                <div class="f-row one">
+                  <div class="f-g"><label>Ime na kartici</label><input id="ccName" placeholder="PETAR PETROVIC" style="text-transform:uppercase"></div>
+                </div>
+                <div class="f-row">
+                  <div class="f-g"><label>Datum isteka (MM/GG)</label><input id="ccExp" inputmode="numeric" placeholder="MM/GG" maxlength="5" oninput="ccExpFormat(this)"></div>
+                  <div class="f-g"><label>CVV/CVC</label><input id="ccCvv" type="password" inputmode="numeric" placeholder="•••" maxlength="4" oninput="this.value=this.value.replace(/\D/g,'')"></div>
+                </div>
+                <div class="cp-brands"><span>VISA</span><span>Mastercard</span><span>DinaCard</span><span style="margin-left:auto">🔒 3D Secure ready</span></div>
+              </div>
+            </div>
+            <div id="ratePanel" style="display:none">
+              <div class="card-pay">
+                <div class="cp-head"><b>Plaćanje na rate</b><span>Informativna kalkulacija — finalni uslovi se utvrđuju u banci pri obradi zahteva</span></div>
+                <div class="f-row">
+                  <div class="f-g"><label>Banka partner</label>
+                    <select class="sel-in" id="rateBanka" style="max-width:none" onchange="renderRateKalk()">
+                      <option value="intesa">Banca Intesa</option>
+                      <option value="raiffeisen">Raiffeisen Bank</option>
+                      <option value="unicredit">UniCredit Bank</option>
+                    </select>
+                  </div>
+                  <div class="f-g"><label>Broj rata</label>
+                    <select class="sel-in" id="rateBroj" style="max-width:none" onchange="renderRateKalk()">
+                      <option value="3">3 mesečne rate (bez kamate)</option>
+                      <option value="6">6 mesečnih rata (bez kamate)</option>
+                      <option value="12">12 mesečnih rata (kamata 4%)</option>
+                      <option value="18">18 mesečnih rata (kamata 6%)</option>
+                      <option value="24">24 mesečne rate (kamata 8%)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="rate-kalk" id="rateKalk">
+                  <div class="rk-row"><span>Ukupan iznos</span><b id="rkTotal">0,00 RSD</b></div>
+                  <div class="rk-row"><span>Mesečna rata (×<span id="rkN">3</span>)</span><b id="rkMonthly" class="rk-big">0,00 RSD</b></div>
+                  <div class="rk-row"><span>Ukupno sa kamatom</span><b id="rkSum">0,00 RSD</b></div>
+                </div>
+                <div class="mail-hint" style="margin-top:10px">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                  <span>Po potvrdi porudžbine kontaktira vas banka za potpisivanje ugovora i proveru kreditne sposobnosti. Robu šaljemo tek po odobrenju zahteva.</span>
+                </div>
+              </div>
+            </div></div>
+          </div>
+        </div>
+
+        <!-- summary -->
+        <div class="sum">
+          <div class="card">
+            <div class="card-h"><h2>Porudžbina</h2><span class="hint" id="shopCount">0 artikala</span></div>
+            <div class="card-b">
+              <div id="shopCart"><div class="empty">Korpa je prazna — dodajte artikle.</div></div>
+              <div id="shopTots" style="display:none">
+                <div class="tot-row" id="sSubRow" style="display:none"><span>Vrednost artikala</span><span class="mono" id="sSub">0,00</span></div>
+                <div class="tot-row" id="sPopRow" style="display:none;color:var(--ok)"><span id="sPopLab">Kupon</span><span class="mono" id="sPop">−0,00</span></div>
+                <div class="tot-row" id="sShipRow" style="display:none"><span>Dostava <small id="sShipNote" style="color:var(--muted)"></small></span><span class="mono" id="sShip">0,00</span></div>
+                <div class="tot-row"><span>Osnovica</span><span class="mono" id="sBase">0,00</span></div>
+                <div class="tot-row"><span>PDV 20%</span><span class="mono" id="sVat">0,00</span></div>
+                <div class="tot-row big"><span>Za uplatu</span><span class="mono" id="sTotal">0,00 RSD</span></div>
+              </div>
+              <div class="coupon-box">
+                <label>Imate promo kod?</label>
+                <div style="display:flex;gap:8px">
+                  <input id="couponCode" placeholder="Unesite kod" style="flex:1;padding:9px 12px;border:1px solid var(--line-2);border-radius:7px;text-transform:uppercase">
+                  <button class="logout-btn" style="border-color:var(--ink);color:var(--ink)" onclick="applyCoupon()">Primeni</button>
+                </div>
+                <div class="login-err" id="couponErr" style="min-height:14px;margin-top:4px"></div>
+              </div>
+              <div id="shopStockWarning" class="note-box" style="display:none;margin-top:12px"></div>
+              <button class="cta" id="shopConfirm" disabled onclick="confirmShop()">Potvrdi porudžbinu i formiraj predračun</button>
+              <div class="mail-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
+                <span>Po potvrdi, dokument se automatski šalje na <b>oficijalni mail sajta</b> i na <b>mail kupca</b>.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </section>
+</main>
+<div class="overlay" id="prodOverlay" onclick="if(event.target===this)closeProduct()"></div>
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()"></div>
+
+<!-- ===== MODAL: PREDRAČUN ===== -->
+<div class="overlay" id="docOverlay" onclick="if(event.target===this)closeDoc()">
+  <div class="doc">
+    <div class="doc-tools">
+      <b id="docTitle">Predračun</b>
+      <div class="grp">
+        <button class="tool-btn" onclick="window.print()">Štampaj / PDF</button>
+        <button class="tool-btn green" onclick="sendDoc()">Pošalji na mejlove</button>
+        <button class="tool-btn" onclick="closeDoc()">Zatvori</button>
+      </div>
+    </div>
+    <div class="doc-body" id="docBody"></div>
+  </div>
+</div>
+
+<div id="compareBar" class="compare-bar" style="display:none"></div>
+<div class="toast" id="toast"><span class="tick">✓</span><span id="toastMsg"></span></div>
+
+
+
+<!-- ═══════════ O NAMA ═══════════ -->
+
+<footer class="de-footer">
+  <div class="de-footer-grid">
+    <div>
+      <div class="de-footer-logo">DOM EXTRA</div>
+      <p class="de-footer-desc">Vaš pouzdani distributer premium opreme za dom. Ovlašćeni zastupnik vodećih svetskih brendova.</p>
+      <div class="de-social-row">
+        <a class="de-social-link ig" href="https://instagram.com/domextra" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="de-social-link fb" href="https://facebook.com/domextra" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg></a>
+        <a class="de-social-link yt" href="https://youtube.com/@domextra" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.77-1.77C19.32 5.13 12 5.13 12 5.13s-7.32 0-8.83.4A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.77 1.77c1.51.4 8.83.4 8.83.4s7.32 0 8.83-.4a2.5 2.5 0 0 0 1.77-1.77C23 15.2 23 12 23 12zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+      </div>
+    </div>
+    <div class="de-footer-col">
+      <h4>Brzi linkovi</h4>
+      <ul class="de-footer-links">
+        <li><a href="/web-shop/">Web Shop</a></li>
+        <li><a href="/b2b/">B2B Portal</a></li>
+        <li><a href="/o-nama/">O nama</a></li>
+        <li><a href="/kontakt/">Kontakt</a></li>
+        <li><a onclick="openLocations()">Naše lokacije</a></li>
+      </ul>
+    </div>
+    <div class="de-footer-col">
+      <h4>Informacije</h4>
+      <ul class="de-footer-links">
+        <li><a onclick="openLegal('uslovi')">Uslovi prodaje</a></li>
+        <li><a onclick="openLegal('reklamacije')">Reklamacije i povraćaj</a></li>
+        <li><a onclick="openLegal('privatnost')">Politika privatnosti</a></li>
+        <li><a onclick="openLegal('faq')">Često postavljana pitanja</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="de-footer-bottom">
+    <p>© 2026 DOM EXTRA DOO · Sva prava zadržana</p>
+    <p>Web Shop &amp; B2B Order Modul</p>
+    <button onclick="openAdmin()" style="position:absolute;right:0;bottom:0;opacity:0;width:60px;height:18px;cursor:default;" aria-hidden="true" tabindex="-1">admin</button>
+  </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="/assets/app.js?v=20261003-final7" defer></script>
+<script src="/assets/backend-bridge.js?v=20261003-final7" defer></script>
+<script src="/assets/cart-runtime.js?v=20261003-final7" defer></script>
+</body>
+</html>

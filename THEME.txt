@@ -1,0 +1,1 @@
+DOM EXTRA minotti visual variant. Backend, API endpoints and application JS are unchanged. Theme class: theme-minotti.

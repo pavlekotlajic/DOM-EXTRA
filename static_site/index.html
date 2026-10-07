@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOM EXTRA — Oprema za dom · Sanitarija, Keramika, Grejanje</title>
+<meta name="description" content="DOM EXTRA — distributer opreme za dom: sanitarija, keramika, grejanje i bela tehnika. Web shop i B2B portal.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..900&family=Roboto+Condensed:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/assets/style.css">
+
+
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DOM EXTRA — Oprema za dom · Sanitarija, Keramika, Grejanje">
+<meta property="og:description" content="DOM EXTRA — distributer opreme za dom: sanitarija, keramika, grejanje i bela tehnika. Web shop i B2B portal.">
+<meta property="og:url" content="/">
+</head>
+<body class="theme-minotti page-home">
+<nav class="de-nav">
+  <a href="/" class="de-logo">DOM <span>EXTRA</span></a>
+  <ul class="de-nav-links">
+    <li><a href="/#brendovi">Brendovi</a></li>
+    <li><a href="/#kategorije">Kategorije</a></li>
+    <li><a href="/web-shop/">Web Shop</a></li>
+    <li><a href="/b2b/">B2B</a></li>
+    <li><a href="/o-nama/">O nama</a></li>
+    <li><a href="/kontakt/">Kontakt</a></li>
+  </ul>
+  <div class="de-nav-actions">
+    <a class="de-btn-b2b" href="/b2b/">B2B Pristup</a>
+    <a class="de-cart-btn" href="/web-shop/" aria-label="Korpa">🛒<span class="de-cart-count hidden" id="deCartCount">0</span></a>
+    <div class="de-hamb" onclick="document.getElementById('deMobileNav').classList.add('open')"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="de-mobile-nav" id="deMobileNav">
+  <button class="de-mobile-close" onclick="document.getElementById('deMobileNav').classList.remove('open')">✕</button>
+  <a href="/#brendovi">Brendovi</a>
+  <a href="/#kategorije">Kategorije</a>
+  <a href="/web-shop/">Web Shop</a>
+  <a href="/b2b/">B2B</a>
+  <a href="/o-nama/">O nama</a>
+  <a href="/kontakt/">Kontakt</a>
+</div>
+
+<header class="de-hero" id="vrh">
+  <div>
+    <div class="de-hero-tag"><span class="d"></span> Distributer opreme za dom</div>
+    <h1>Sve za <span>vaš dom</span><br>na jednom mestu</h1>
+    <p>Sanitarija, keramika, grejanje i bela tehnika vodećih svetskih brendova. Naručite online uz dostavu na adresu ili preuzimanje u showroomu — uz stručan savet našeg tima.</p>
+    <div class="de-hero-actions">
+      <button class="de-cta" onclick="deGo('shop')">Pogledaj ponudu →</button>
+      <button class="de-cta-ghost" onclick="deGo('b2b')">B2B portal</button>
+    </div>
+    <div class="de-hero-stats">
+      <div class="de-hero-stat"><b>8</b><span>brendova</span></div>
+      <div class="de-hero-stat"><b>5000+</b><span>artikala</span></div>
+      <div class="de-hero-stat"><b>10+</b><span>godina iskustva</span></div>
+    </div>
+  </div>
+  <div class="de-hero-panel">
+    <h4>Naši brendovi</h4>
+    <div class="de-hero-brand-row" onclick="deBrand('StoneTech')"><span class="hb-name">StoneTech</span><span class="hb-cat">Keramika</span></div>
+    <div class="de-hero-brand-row" onclick="deBrand('AquaLux')"><span class="hb-name">AquaLux</span><span class="hb-cat">Sanitarija</span></div>
+    <div class="de-hero-brand-row" onclick="deBrand('BauMix')"><span class="hb-name">BauMix</span><span class="hb-cat">Lepkovi i mase</span></div>
+    <div class="de-hero-brand-row" onclick="deBrand('ThermoPro')"><span class="hb-name">ThermoPro</span><span class="hb-cat">Grejanje</span></div>
+    <div class="de-hero-brand-row" onclick="deBrand('ElektroDom')"><span class="hb-name">ElektroDom</span><span class="hb-cat">Bela tehnika</span></div>
+  </div>
+</header>
+
+<!-- ═══════════ BRENDOVI ═══════════ -->
+<section class="de-section de-reveal" id="brendovi">
+  <div class="de-section-header">
+    <span class="de-label">Ovlašćeni zastupnik</span>
+    <h2 class="de-title">Brendovi kojima verujemo</h2>
+    <p class="de-desc">Sarađujemo sa proverenim proizvođačima — originalna roba sa punom garancijom.</p>
+  </div>
+  <div class="de-brands-grid" aria-live="polite"></div>
+</section>
+
+<!-- ═══════════ KATEGORIJE ═══════════ -->
+<section class="de-section de-reveal" id="kategorije" style="padding-top:0;">
+  <div class="de-section-header">
+    <span class="de-label">Asortiman</span>
+    <h2 class="de-title">Šta nudimo</h2>
+    <p class="de-desc">Kliknite kategoriju da odmah filtrirate ponudu u web shopu.</p>
+  </div>
+  <div class="de-cat-grid" aria-live="polite"></div>
+</section>
+
+<!-- ═══════════ WEB SHOP / B2B / ADMIN (modul) ═══════════ -->
+<div class="overlay" id="prodOverlay" onclick="if(event.target===this)closeProduct()"></div>
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()"></div>
+
+<!-- ===== MODAL: PREDRAČUN ===== -->
+<div class="overlay" id="docOverlay" onclick="if(event.target===this)closeDoc()">
+  <div class="doc">
+    <div class="doc-tools">
+      <b id="docTitle">Predračun</b>
+      <div class="grp">
+        <button class="tool-btn" onclick="window.print()">Štampaj / PDF</button>
+        <button class="tool-btn green" onclick="sendDoc()">Pošalji na mejlove</button>
+        <button class="tool-btn" onclick="closeDoc()">Zatvori</button>
+      </div>
+    </div>
+    <div class="doc-body" id="docBody"></div>
+  </div>
+</div>
+
+<div id="compareBar" class="compare-bar" style="display:none"></div>
+<div class="toast" id="toast"><span class="tick">✓</span><span id="toastMsg"></span></div>
+
+
+
+<!-- ═══════════ O NAMA ═══════════ -->
+
+<footer class="de-footer">
+  <div class="de-footer-grid">
+    <div>
+      <div class="de-footer-logo">DOM EXTRA</div>
+      <p class="de-footer-desc">Vaš pouzdani distributer premium opreme za dom. Ovlašćeni zastupnik vodećih svetskih brendova.</p>
+      <div class="de-social-row">
+        <a class="de-social-link ig" href="https://instagram.com/domextra" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="de-social-link fb" href="https://facebook.com/domextra" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg></a>
+        <a class="de-social-link yt" href="https://youtube.com/@domextra" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.77-1.77C19.32 5.13 12 5.13 12 5.13s-7.32 0-8.83.4A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.77 1.77c1.51.4 8.83.4 8.83.4s7.32 0 8.83-.4a2.5 2.5 0 0 0 1.77-1.77C23 15.2 23 12 23 12zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+      </div>
+    </div>
+    <div class="de-footer-col">
+      <h4>Brzi linkovi</h4>
+      <ul class="de-footer-links">
+        <li><a href="/web-shop/">Web Shop</a></li>
+        <li><a href="/b2b/">B2B Portal</a></li>
+        <li><a href="/o-nama/">O nama</a></li>
+        <li><a href="/kontakt/">Kontakt</a></li>
+        <li><a onclick="openLocations()">Naše lokacije</a></li>
+      </ul>
+    </div>
+    <div class="de-footer-col">
+      <h4>Informacije</h4>
+      <ul class="de-footer-links">
+        <li><a onclick="openLegal('uslovi')">Uslovi prodaje</a></li>
+        <li><a onclick="openLegal('reklamacije')">Reklamacije i povraćaj</a></li>
+        <li><a onclick="openLegal('privatnost')">Politika privatnosti</a></li>
+        <li><a onclick="openLegal('faq')">Često postavljana pitanja</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="de-footer-bottom">
+    <p>© 2026 DOM EXTRA DOO · Sva prava zadržana</p>
+    <p>Web Shop &amp; B2B Order Modul</p>
+    <button onclick="openAdmin()" style="position:absolute;right:0;bottom:0;opacity:0;width:60px;height:18px;cursor:default;" aria-hidden="true" tabindex="-1">admin</button>
+  </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="/assets/app.js?v=20261003-final6" defer></script>
+<script src="/assets/backend-bridge.js?v=20261003-final6" defer></script>
+<script src="/assets/cart-runtime.js?v=20261003-final6" defer></script>
+</body>
+</html>
