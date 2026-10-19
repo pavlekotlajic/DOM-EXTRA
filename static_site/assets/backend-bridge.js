@@ -298,21 +298,14 @@
   function renderHomeDatabaseModels(){
     const home=location.pathname==='/' || location.pathname==='';
     if(!home) return;
-    const iconByGroup={
-      'Sanitarija': '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 9h16v7H10zM14 16v9a10 10 0 0 0 20 0v-9M24 9V5M24 5h8M32 5v5"/><path d="M20 35h16M28 35v7M19 42h18"/></svg>',
-      'Pločice': '<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="6" width="16" height="16" rx="1"/><rect x="26" y="6" width="16" height="16" rx="1"/><rect x="6" y="26" width="16" height="16" rx="1"/><rect x="26" y="26" width="16" height="16" rx="1"/></svg>',
-      'Grejanje': '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M9 10h30M9 18h30M9 26h30M9 34h30M13 7v34M21 7v34M29 7v34M37 7v34"/><path d="M24 3c-4 5 2 7 2 11 0 3-2 5-5 6M29 20c3 3 4 5 4 8"/></svg>',
-      'Lepkovi i mase': '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M17 8h14M19 8v5h10V8M15 13h18v28H15z"/><path d="M19 21h10M19 27h10M19 33h7"/></svg>',
-      'Bela Tehnika': '<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="5" width="28" height="38" rx="2"/><circle cx="24" cy="27" r="8"/><circle cx="17" cy="11" r="1"/><circle cx="22" cy="11" r="1"/><path d="M28 11h5"/></svg>'
-    };
-    const defaultCategoryIcon='<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="7" width="13" height="13" rx="1"/><rect x="28" y="7" width="13" height="13" rx="1"/><rect x="7" y="28" width="13" height="13" rx="1"/><rect x="28" y="28" width="13" height="13" rx="1"/></svg>';
+    const iconByGroup={'Sanitarija':'🚿','Pločice':'🏺','Grejanje':'🔥','Lepkovi i mase':'🪣','Bela Tehnika':'🫧'};
     const descByGroup={'Sanitarija':'WC šolje, lavaboi, baterije, tuš sistemi i kupatilski program.','Pločice':'Zidne i podne pločice, veliki formati, mermerni dezeni.','Grejanje':'Bojleri, radijatori, toplotne pumpe i prateća oprema.','Lepkovi i mase':'Lepkovi za pločice, fug mase, hidroizolacija i estrisi.','Bela Tehnika':'Veš mašine, sudo mašine, šporeti, ugradni aparati.'};
     const bg=document.querySelector('#brendovi .de-brands-grid');
     if(bg && dbBrands.length){ bg.innerHTML=dbBrands.map(b=>`<a href="/web-shop/?brend=${encodeURIComponent(b.name)}" class="de-brand-card"><div class="bn">${b.name}</div><div class="bc">${b.category||'Brend'}</div></a>`).join('') + `<a href="/web-shop/" class="de-brand-card"><div class="bn">+ ostali</div><div class="bc">Cela ponuda</div></a>`; }
     const hp=document.querySelector('#vrh .de-hero-panel');
     if(hp && dbBrands.length){ hp.innerHTML='<h4>Naši brendovi</h4>'+dbBrands.slice(0,5).map(b=>`<a href="/web-shop/?brend=${encodeURIComponent(b.name)}" class="de-hero-brand-row"><span class="hb-name">${b.name}</span><span class="hb-cat">${b.category||'Brend'}</span></a>`).join(''); }
     const cg=document.querySelector('#kategorije .de-cat-grid');
-    if(cg && dbGroups.length){ cg.innerHTML=dbGroups.map((g,i)=>{ const n=typeof g==='string'?g:g.name; return `<a href="/web-shop/?grupa=${encodeURIComponent(n)}" class="de-cat-card ${i===0?'large':''}"><div class="de-cat-icon">${iconByGroup[n]||defaultCategoryIcon}</div><h3>${n}</h3><p>${descByGroup[n]||'Proizvodi iz kategorije '+n+'.'}</p><div class="arrow">Pogledaj →</div></a>`; }).join('') + `<a href="/web-shop/" class="de-cat-card"><div class="de-cat-icon">${defaultCategoryIcon}</div><h3>Kompletna ponuda</h3><p>Pretražite ceo asortiman u web shopu.</p><div class="arrow">Pogledaj →</div></a>`; }
+    if(cg && dbGroups.length){ cg.innerHTML=dbGroups.map((g,i)=>{ const n=typeof g==='string'?g:g.name; return `<a href="/web-shop/?grupa=${encodeURIComponent(n)}" class="de-cat-card ${i===0?'large':''}"><div class="de-cat-icon">${iconByGroup[n]||'🛒'}</div><h3>${n}</h3><p>${descByGroup[n]||'Proizvodi iz kategorije '+n+'.'}</p><div class="arrow">Pogledaj →</div></a>`; }).join('') + `<a href="/web-shop/" class="de-cat-card"><div class="de-cat-icon">🛒</div><h3>Kompletna ponuda</h3><p>Pretražite ceo asortiman u web shopu.</p><div class="arrow">Pogledaj →</div></a>`; }
   }
 
   function fillDatabaseLists(){

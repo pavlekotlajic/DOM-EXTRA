@@ -445,19 +445,8 @@ function toggleSearchNotify(i){
 
 function clearFilters(){
   ['fSearch','fPriceMin','fPriceMax'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});
-  const grupa=document.getElementById('fGrupa'); if(grupa) grupa.value='';
-  const sort=document.getElementById('fSort'); if(sort) sort.value='';
-  ['chipAkc','chipNew','chipStock'].forEach(i=>{const e=document.getElementById(i);if(e)e.classList.remove('on');});
-
-  // Ako je shop otvoren preko /web-shop/?grupa=... ili ?brend=...,
-  // URL parametar je takođe filter i mora da se ukloni pri resetovanju.
-  try{
-    const url=new URL(window.location.href);
-    url.searchParams.delete('grupa');
-    url.searchParams.delete('brend');
-    window.history.replaceState({},'',url.pathname+(url.search?'?'+url.searchParams.toString():'')+url.hash);
-  }catch(e){}
-
+  document.getElementById('fGrupa').value=''; document.getElementById('fSort').value='';
+  ['chipAkc','chipNew','chipStock'].forEach(i=>document.getElementById(i).classList.remove('on'));
   renderShopGrid();
 }
 function shopAdd(id){
@@ -1626,7 +1615,7 @@ function renderB2BRows(){
       <td class="mono">${p.sku}<br><span style="color:var(--muted)">${p.bar}</span></td>
       <td><div class="t-name">${p.name}</div><div class="t-desc">${p.desc}</div><div class="t-desc" style="color:var(--accent-ink);background:#f3ffd6;display:inline-block;padding:1px 7px;border-radius:99px;font-size:10px;margin-top:3px">${p.grupa}</div></td>
       <td>${stockPill(p.stock)}</td>
-      <td><div style="display:flex;gap:6px;align-items:center"><input class="qty-in" type="number" min="0" step="any" placeholder="0" value="${b2bCart[p.id]||''}" oninput="b2bQtyLive(${JSON.stringify(p.id)},this.value)" onchange="b2bQty(${JSON.stringify(p.id)},this.value)" aria-label="Količina ${p.name}"><button type="button" class="x-btn" style="border:1px solid var(--line);padding:6px 9px" data-b2b-add-id="${String(p.id)}">Dodaj</button></div></td>
+      <td><input class="qty-in" type="number" min="0" step="any" placeholder="0" value="${b2bCart[p.id]||''}" onchange="b2bQty(${JSON.stringify(p.id)},this.value)" aria-label="Količina ${p.name}"></td>
       <td>${p.jm}${pakInfo(p)?`<br><span style="font-size:10px;color:var(--muted);white-space:nowrap">${pakInfo(p)}</span>`:''}</td>
       <td class="mono">${fmt(p.price)}</td>
       <td class="mono rab-cell">${redRab()}%<br><span style="color:var(--muted);font-size:10px">klasa ${cb().klasa}</span></td>
@@ -1659,69 +1648,32 @@ function renderB2BRows(){
       </div>
       <div class="bc-bot">
         <div class="bc-price"><span>VP ${fmt(p.price)}</span><b>${fmt(netPrice(p))} <small>RSD/${p.jm} neto</small></b>${pakInfo(p)?`<span style="font-size:10px;color:var(--muted)">${pakInfo(p)}</span>`:''}</div>
-        <div style="display:flex;gap:6px;align-items:center"><input class="qty-in bc-qty" type="number" min="0" step="any" placeholder="0" value="${b2bCart[p.id]||''}" oninput="b2bQtyLive(${JSON.stringify(p.id)},this.value)" onchange="b2bQty(${JSON.stringify(p.id)},this.value)" aria-label="Količina ${p.name}"><button type="button" class="x-btn" style="border:1px solid var(--line);padding:6px 9px" data-b2b-add-id="${String(p.id)}">Dodaj</button></div>
+        <input class="qty-in bc-qty" type="number" min="0" step="any" placeholder="0" value="${b2bCart[p.id]||''}" onchange="b2bQty(${JSON.stringify(p.id)},this.value)" aria-label="Količina ${p.name}">
       </div>
     </div>`).join('') : '<div class="empty">Nema artikala za zadate filtere.</div>';
 }
 const qf = n => n%1===0 ? n.toLocaleString('sr-RS') : n.toLocaleString('sr-RS',{minimumFractionDigits:2,maximumFractionDigits:2});
 const round2 = n => Math.round(n*100)/100;
 function pakInfo(p){ return p.pak>1||p.jm==='m²' ? `1 ${p.pakNaziv} = ${qf(p.pak)} ${p.jm}` : ''; }
-function b2bQtyLive(id,v){
-  const n=parseFloat(String(v).replace(',', '.'));
-  if(!Number.isFinite(n) || n<=0) delete b2bCart[id];
-  else b2bCart[String(id)]=n;
-  // Donja porudžbenica se osvežava odmah, ali katalog/input ostaje netaknut.
-  try{ renderB2BCart(); }catch(e){ console.error('B2B cart render:',e); }
-}
-
-// Pouzdano rukovanje B2B dugmetom "Dodaj" za dinamički renderovane proizvode.
-document.addEventListener('click', function(e){
-  const btn=e.target.closest('[data-b2b-add-id]');
-  if(!btn) return;
-  e.preventDefault();
-  e.stopPropagation();
-  const wrap=btn.parentElement;
-  const input=wrap ? wrap.querySelector('input.qty-in') : null;
-  const id=btn.getAttribute('data-b2b-add-id');
-  const value=input ? input.value : '';
-  b2bAddFromInput(id,value);
-});
-
-function b2bAddFromInput(id,v){
-  const p=products.find(x=>String(x.id)===String(id));
-  const n=parseFloat(String(v).replace(',', '.'));
-  if(!p){ toast('Proizvod nije pronađen.'); return; }
-  if(!Number.isFinite(n) || n<=0){ toast('Unesite količinu veću od 0.'); return; }
-  b2bQty(id,n);
-  // Osiguraj da je stavka stvarno prisutna čak i ako je količina promenjena
-  // neposredno pre klika na Dodaj.
-  b2bCart[String(id)] = b2bCart[String(id)] || b2bCart[id] || n;
-  renderB2BCart();
-}
-
 function b2bQty(id,v){
-  v=Math.max(0,parseFloat(String(v).replace(',', '.'))||0);
+  v=Math.max(0,parseFloat(String(v).replace(',','.'))||0);
   const p=products.find(x=>x.id==id);
-  if(!p) return;
   if(v===0){ delete b2bCart[id]; renderB2BRows(); renderB2BCart(); return; }
-  // Zaokruživanje naviše na cela pakovanja tek kada korisnik završi unos.
-  const pak=Math.max(Number(p.pak)||1,1);
-  const kut=Math.ceil(round2(v/pak)-1e-9);
-  const adj=round2(kut*pak);
+  // zaokruživanje naviše na cela pakovanja (npr. 2,5 m² → 2 kutije × 1,44 = 2,88 m²)
+  const kut=Math.ceil(round2(v/p.pak)-1e-9);
+  const adj=round2(kut*p.pak);
   if(Math.abs(adj-v)>0.001){
     toast(`${p.name}: ${qf(v)} ${p.jm} → zaokruženo na ${kut} ${p.pakNaziv}${kut>1?'e':''} = ${qf(adj)} ${p.jm}`);
   }
   b2bCart[id]=adj;
-  renderB2BRows();
-  renderB2BCart();
+  renderB2BRows(); renderB2BCart();
 }
 
 function b2bCompute(){
   let gross=0, net=0, redAmt=0, posAmt=0, akAmt=0, avAmt=0, logAmt=0, weight=0, lines=[], missing=[];
   for(const id in b2bCart){
-    const p=products.find(x=>String(x.id)===String(id));
-    const req=Number(b2bCart[id]);
-    if(!p || !Number.isFinite(req) || req<=0) continue;
+    const p=products.find(x=>x.id==id);
+    const req=b2bCart[id];
     if(p.stock===0){ missing.push({p, req, got:0}); continue; }
     let got=Math.min(req,p.stock);
     if(got<req){ // svesti na cela pakovanja koja staju u stanje

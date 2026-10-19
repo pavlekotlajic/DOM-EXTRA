@@ -1,17 +1,15 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-import dj_database_url
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'domextra-dev-secret-change-me')
 DEBUG = os.getenv('DJANGO_DEBUG', '1') == '1'
 ALLOWED_HOSTS = [h.strip() for h in os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(',') if h.strip()]
-INSTALLED_APPS = [
-    'django.contrib.staticfiles',
-    'shop',
-]
+
+INSTALLED_APPS = ['shop']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -28,36 +26,20 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = []
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-
-DATABASE_URL = os.getenv('DATABASE_URL')
-
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.parse(
-            DATABASE_URL,
-            conn_max_age=600
-        )
+DB_ENGINE = os.getenv('DB_ENGINE', 'django.db.backends.mysql')
+DATABASES = {
+    'default': {
+        'ENGINE': DB_ENGINE,
+        'NAME': os.getenv('DB_NAME', 'domextra'),
+        'USER': os.getenv('DB_USER', 'root'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'root'),
+        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+        'PORT': os.getenv('DB_PORT', '3306'),
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+        },
     }
-else:
-    DB_ENGINE = os.getenv(
-        'DB_ENGINE',
-        'django.db.backends.mysql'
-    )
-
-    DATABASES = {
-        'default': {
-            'ENGINE': DB_ENGINE,
-            'NAME': os.getenv('DB_NAME', 'domextra'),
-            'USER': os.getenv('DB_USER', 'root'),
-            'PASSWORD': os.getenv('DB_PASSWORD', 'root'),
-            'HOST': os.getenv('DB_HOST', '127.0.0.1'),
-            'PORT': os.getenv('DB_PORT', '3306'),
-            'OPTIONS': {
-                'charset': 'utf8mb4',
-            },
-        }
-    }
+}
 
 LANGUAGE_CODE = 'sr'
 TIME_ZONE = 'Europe/Belgrade'
