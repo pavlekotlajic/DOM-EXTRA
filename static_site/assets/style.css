@@ -1082,3 +1082,141 @@ body.dark-mode .overlay{background:rgba(0,0,0,.82)}
 .checkout-step {
     pointer-events: none;
 }
+
+/* FIX DEFINITIVNO: stvarna SVG ikonica korpe umesto emoji-ja */
+.de-nav .de-cart-btn {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  padding: 0 !important;
+  border: 1.5px solid #8b6b4a !important;
+  border-radius: 50% !important;
+  background: #fff !important;
+  color: #292a27 !important;
+  font-size: 16px !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+.de-nav .de-cart-btn .de-cart-icon {
+  display: block !important;
+  width: 24px !important;
+  height: 24px !important;
+  fill: none !important;
+  stroke: #292a27 !important;
+  stroke-width: 1.8 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  color: #292a27 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.de-nav .de-cart-btn .de-cart-icon * {
+  fill: none !important;
+  stroke: #292a27 !important;
+}
+.de-nav .de-cart-btn .de-cart-count {
+  position: absolute !important;
+  top: -3px !important;
+  right: -3px !important;
+  z-index: 2 !important;
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+  color: #17120f !important;
+  background: #c98e6b !important;
+  border-radius: 999px !important;
+  box-shadow: 0 0 0 2px #fff !important;
+}
+/* Dark theme */
+html[data-theme="dark"] .de-nav .de-cart-btn,
+html[data-theme="dark"] body.page-shop.cart-only-page .de-nav .de-cart-btn {
+  background: #151515 !important;
+  color: #f5f3f0 !important;
+  border-color: #8b6b4a !important;
+}
+
+
+/* DOM EXTRA mobile category/filter layout correction */
+@media (max-width: 760px) {
+  .catalog-layout {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 18px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  .catalog-layout > *, .filters, .filter-sidebar, aside.filters {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    position: static !important;
+    float: none !important;
+  }
+  .filters {
+    display: block !important;
+    padding: 16px !important;
+    margin: 0 0 18px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+  .filters h2 { margin: 0 0 16px !important; font-size: 22px !important; }
+  .filters .filter-group { margin: 0 0 14px !important; min-width: 0 !important; }
+  .filters .filter-group select,
+  .filters .filter-group [data-slot="select-trigger"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: 44px !important;
+    box-sizing: border-box !important;
+  }
+  .filters .text-link,
+  #resetFilters,
+  button.text-link {
+    display: inline-flex !important;
+    width: auto !important;
+    max-width: 100% !important;
+    min-height: 34px !important;
+    height: auto !important;
+    padding: 7px 10px !important;
+    margin: 8px 0 12px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    border: 1px solid currentColor !important;
+    border-radius: 3px !important;
+    box-sizing: border-box !important;
+    white-space: normal !important;
+  }
+  .filter-category-list {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 240px !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .filter-category {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 10px 2px !important;
+    overflow-wrap: anywhere !important;
+  }
+  .catalog-tools { display: flex !important; flex-direction: column !important; align-items: stretch !important; gap: 12px !important; width: 100% !important; }
+  .catalog-tools .search-field { width: 100% !important; flex: 1 1 auto !important; min-width: 0 !important; box-sizing: border-box !important; }
+  .catalog-tools input, #productSearch { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; }
+}
+

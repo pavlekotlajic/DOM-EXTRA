@@ -1,0 +1,308 @@
+/* DOM EXTRA final visual corrections (2026-10-15) */
+
+/* Keep the shared dark header's wordmark readable on every dark-theme page. */
+html:not([data-theme="light"]) body .site-header .wordmark,
+html:not([data-theme="light"]) body .site-header .wordmark:visited {
+  color: #f6f6f4 !important;
+  opacity: 1 !important;
+}
+html:not([data-theme="light"]) body .site-header .wordmark span {
+  color: #bdb8b1 !important;
+  opacity: 1 !important;
+}
+html[data-theme="light"] body .site-header .wordmark,
+html[data-theme="light"] body .site-header .wordmark:visited {
+  color: #242421 !important;
+  opacity: 1 !important;
+}
+html[data-theme="light"] body .site-header .wordmark span {
+  color: #77736d !important;
+  opacity: 1 !important;
+}
+
+/* Contact page: enforce readable contrast for the title, spec card and product link. */
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page > div:nth-child(2) > h2 {
+  color: #f6f6f4 !important;
+}
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page .info-block {
+  background: #191919 !important;
+  color: #f4f2ef !important;
+  border-color: #3a3a3a !important;
+}
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page .info-block h2,
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page .info-block h3,
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page .info-block p {
+  color: #f4f2ef !important;
+}
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page .info-block p {
+  color: #bdb8b1 !important;
+}
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page .info-block:nth-child(2) h3 {
+  color: #f6f6f4 !important;
+  font-weight: 750 !important;
+}
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page .info-block:nth-child(2) .text-link {
+  display: inline-flex !important;
+  color: #dca482 !important;
+  border-bottom: 1px solid #c98e6b !important;
+  opacity: 1 !important;
+  font-weight: 700 !important;
+}
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page .info-block:nth-child(2) .text-link:hover {
+  color: #f0bd9a !important;
+  border-color: #f0bd9a !important;
+}
+
+/* The contact form should match the dark page, not show a white panel with pale labels. */
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page .form-stack {
+  background: #191919 !important;
+  color: #f4f2ef !important;
+  border: 1px solid #3a3a3a !important;
+  border-radius: 2px !important;
+}
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page .form-stack label {
+  color: #d2ccc5 !important;
+}
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page .form-stack input,
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page .form-stack select,
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page .form-stack textarea {
+  background: #101010 !important;
+  color: #f6f6f4 !important;
+  border: 1px solid #49433d !important;
+}
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page .form-stack input::placeholder,
+html:not([data-theme="light"]) body:has(.contact-page) .contact-page .form-stack textarea::placeholder {
+  color: #938a82 !important;
+  opacity: 1 !important;
+}
+
+/* Light theme counterpart: all form/card text stays dark on light surfaces. */
+html[data-theme="light"] body:has(.contact-page) .contact-page > div:nth-child(2) > h2 {
+  color: #242421 !important;
+}
+html[data-theme="light"] body:has(.contact-page) .contact-page .info-block,
+html[data-theme="light"] body:has(.contact-page) .contact-page .form-stack {
+  background: #fff !important;
+  color: #242421 !important;
+  border-color: #dedbd3 !important;
+}
+html[data-theme="light"] body:has(.contact-page) .contact-page .info-block h2,
+html[data-theme="light"] body:has(.contact-page) .contact-page .info-block h3,
+html[data-theme="light"] body:has(.contact-page) .contact-page .info-block p,
+html[data-theme="light"] body:has(.contact-page) .contact-page .form-stack label {
+  color: #242421 !important;
+}
+html[data-theme="light"] body:has(.contact-page) .contact-page .info-block p {
+  color: #626057 !important;
+}
+html[data-theme="light"] body:has(.contact-page) .contact-page .info-block:nth-child(2) .text-link {
+  color: #875a3d !important;
+  border-bottom-color: #875a3d !important;
+}
+html[data-theme="light"] body:has(.contact-page) .contact-page .form-stack input,
+html[data-theme="light"] body:has(.contact-page) .contact-page .form-stack select,
+html[data-theme="light"] body:has(.contact-page) .contact-page .form-stack textarea {
+  background: #fbfaf7 !important;
+  color: #242421 !important;
+  border-color: #dedbd3 !important;
+}
+
+/* Checkout shipping/payment options: fix the radio input expanding to 100% width.
+   Keep the radio at the left and the text immediately to its right. */
+body.page-shop #view-shop .opt-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 10px !important;
+}
+body.page-shop #view-shop .opt-grid > label.opt {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 12px !important;
+  width: 100% !important;
+  text-align: left !important;
+  min-width: 0 !important;
+  padding: 15px 16px !important;
+  background: #101010 !important;
+  color: #f4f2ef !important;
+  border: 1px solid #3a3430 !important;
+  border-radius: 11px !important;
+  box-shadow: none !important;
+}
+body.page-shop #view-shop .opt-grid > label.opt:hover {
+  border-color: #a97959 !important;
+}
+body.page-shop #view-shop .opt-grid > label.opt.sel {
+  background: #241e19 !important;
+  color: #f6f2ee !important;
+  border-color: #c98e6b !important;
+  box-shadow: inset 3px 0 0 #c98e6b !important;
+}
+body.page-shop #view-shop .opt-grid > label.opt > input[type="radio"] {
+  appearance: auto !important;
+  display: block !important;
+  width: 18px !important;
+  min-width: 18px !important;
+  max-width: 18px !important;
+  height: 18px !important;
+  min-height: 18px !important;
+  flex: 0 0 18px !important;
+  margin: 3px 0 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  accent-color: #c98e6b !important;
+  box-shadow: none !important;
+}
+body.page-shop #view-shop .opt-grid > label.opt > div {
+  display: block !important;
+  flex: 1 1 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+body.page-shop #view-shop .opt-grid > label.opt b {
+  display: block !important;
+  color: #f4f2ef !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  text-align: left !important;
+}
+body.page-shop #view-shop .opt-grid > label.opt span {
+  display: block !important;
+  margin-top: 4px !important;
+  color: #bdb6ae !important;
+  font-size: 12px !important;
+  line-height: 1.55 !important;
+  text-align: left !important;
+}
+html[data-theme="light"] body.page-shop #view-shop .opt-grid > label.opt {
+  background: #fff !important;
+  color: #242421 !important;
+  border-color: #dedbd3 !important;
+}
+html[data-theme="light"] body.page-shop #view-shop .opt-grid > label.opt.sel {
+  background: #f7f0e9 !important;
+  border-color: #986b4f !important;
+  box-shadow: inset 3px 0 0 #986b4f !important;
+}
+html[data-theme="light"] body.page-shop #view-shop .opt-grid > label.opt b {
+  color: #242421 !important;
+}
+html[data-theme="light"] body.page-shop #view-shop .opt-grid > label.opt span {
+  color: #625e57 !important;
+}
+
+
+/* 2026-10-19: final header contrast fixes for both themes. */
+html[data-theme="light"] .header-actions .header-cart-link,
+html[data-theme="light"] .header-actions .header-cart-link:visited {
+  color: #242421 !important; background: #fff !important; border-color: #986b4f !important;
+}
+html[data-theme="light"] .header-actions .header-cart-icon { stroke: #242421 !important; color: #242421 !important; }
+html[data-theme="light"] .header-actions .header-cart-link:hover { background: #f1e8df !important; color: #242421 !important; }
+html[data-theme="dark"] .header-actions .header-cart-link,
+html:not([data-theme="light"]) .header-actions .header-cart-link {
+  color: #f7f5f2 !important; background: #1b1b1b !important; border-color: #c98e6b !important;
+}
+html[data-theme="dark"] .header-actions .header-cart-icon,
+html:not([data-theme="light"]) .header-actions .header-cart-icon { stroke: #f7f5f2 !important; color: #f7f5f2 !important; }
+/* The theme switch is a normal header control, readable in either theme. */
+.site-header .header-actions > .theme-toggle,
+.site-header .header-actions button#themeToggle {
+  position: static !important; display: inline-flex !important; visibility: visible !important; opacity: 1 !important;
+  align-items: center !important; justify-content: center !important; white-space: nowrap !important;
+  width: auto !important; min-width: max-content !important; height: 40px !important; min-height: 40px !important;
+  padding: 8px 12px !important; margin: 0 !important; border-radius: 2px !important;
+  font-size: 12px !important; font-weight: 700 !important; line-height: 1.2 !important;
+  z-index: 20 !important; transform: none !important;
+}
+html[data-theme="light"] .site-header .header-actions > .theme-toggle,
+html[data-theme="light"] .site-header .header-actions button#themeToggle {
+  color: #242421 !important; background: #fff !important; border: 1px solid #986b4f !important;
+}
+html[data-theme="dark"] .site-header .header-actions > .theme-toggle,
+html:not([data-theme="light"]) .site-header .header-actions > .theme-toggle,
+html[data-theme="dark"] .site-header .header-actions button#themeToggle,
+html:not([data-theme="light"]) .site-header .header-actions button#themeToggle {
+  color: #f7f5f2 !important; background: #1b1b1b !important; border: 1px solid #c98e6b !important;
+}
+
+
+/* DOM EXTRA mobile category/filter layout correction */
+@media (max-width: 760px) {
+  .catalog-layout {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 18px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  .catalog-layout > *, .filters, .filter-sidebar, aside.filters {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    position: static !important;
+    float: none !important;
+  }
+  .filters {
+    display: block !important;
+    padding: 16px !important;
+    margin: 0 0 18px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+  .filters h2 { margin: 0 0 16px !important; font-size: 22px !important; }
+  .filters .filter-group { margin: 0 0 14px !important; min-width: 0 !important; }
+  .filters .filter-group select,
+  .filters .filter-group [data-slot="select-trigger"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: 44px !important;
+    box-sizing: border-box !important;
+  }
+  .filters .text-link,
+  #resetFilters,
+  button.text-link {
+    display: inline-flex !important;
+    width: auto !important;
+    max-width: 100% !important;
+    min-height: 34px !important;
+    height: auto !important;
+    padding: 7px 10px !important;
+    margin: 8px 0 12px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    border: 1px solid currentColor !important;
+    border-radius: 3px !important;
+    box-sizing: border-box !important;
+    white-space: normal !important;
+  }
+  .filter-category-list {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 240px !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .filter-category {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 10px 2px !important;
+    overflow-wrap: anywhere !important;
+  }
+  .catalog-tools { display: flex !important; flex-direction: column !important; align-items: stretch !important; gap: 12px !important; width: 100% !important; }
+  .catalog-tools .search-field { width: 100% !important; flex: 1 1 auto !important; min-width: 0 !important; box-sizing: border-box !important; }
+  .catalog-tools input, #productSearch { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; }
+}
+

@@ -60,6 +60,7 @@
       const mapped=serverProducts.map(p=>{const x=mapProduct(p,groups); x.__serverId=p.id; return makeProductProxy(x);});
       if(mapped.length || products.length===0) products.splice(0,products.length,...mapped);
       window.domextraProducts=products; window.domextraShopCart=shopCart;
+      window.domextraProductDataLoaded = true;
 
       // Load the rest of the public data separately. A failure here must not
       // hide products that were already loaded successfully.
@@ -81,6 +82,7 @@
       try{
         if(hasEl('shopGrid')) renderShopGrid();
         if(hasEl('shopCart')) renderShopCart();
+        if(typeof window.syncCartNavigation==='function') window.syncCartNavigation();
         if(hasEl('heroSections')) renderHero();
         if(hasEl('saleBannerWrap')) renderSaleBanner();
         renderB2BSafely();

@@ -21,9 +21,22 @@
   function getProducts(){ return Array.isArray(window.domextraProducts)?window.domextraProducts:[]; }
   function sync(){
     const cart=getCart();
-    const n=Object.keys(cart).filter(k=>Number(cart[k])>0).length;
+    const products=getProducts();
+    const dataReady=window.domextraProductDataLoaded===true;
+    const validIds=new Set(products.map(p=>String(p.id)));
+    const valid=Object.entries(cart).filter(([k,q])=>Number(q)>0 && (!dataReady || validIds.has(String(k))));
+    const invalid= dataReady ? Object.entries(cart).filter(([k,q])=>Number(q)>0 && !validIds.has(String(k))) : [];
     const el=document.getElementById('deCartCount');
-    if(el){el.textContent=n;el.classList.toggle('hidden',n===0);}
+    if(el){el.textContent=valid.length;el.classList.toggle('hidden',valid.length===0);}
+    const notice=document.getElementById('cartIntegrityWarning');
+    if(notice){
+      if(invalid.length){
+        notice.hidden=false;
+        notice.innerHTML='<strong>Provera sačuvane korpe</strong><br>'+invalid.length+' ranije sačuvanih stavki ne postoji u trenutno učitanom katalogu. Te stavke nisu uračunate u cenu. Ako je baza promenjena, dodaj ponovo proizvode iz kataloga ili ukloni nedostupne stavke. <br><button type="button" id="clearUnavailableCart">Ukloni nedostupne stavke</button>';
+        const clear=document.getElementById('clearUnavailableCart');
+        if(clear && !clear.dataset.bound){clear.dataset.bound='1';clear.addEventListener('click',()=>{const c=getCart();invalid.forEach(([k])=>delete c[k]);window.domextraShopCart=c;saveCart();sync();toastSafe('Nedostupne stavke su uklonjene iz sačuvane korpe.');});}
+      }else{notice.hidden=true;notice.textContent='';}
+    }
     if(typeof renderShopCart==='function' && document.getElementById('shopCart')) { try{ renderShopCart(); }catch(e){ console.warn('renderShopCart',e); } }
   }
   window.getToken=function(){ return localStorage.getItem(tokenKey)||''; };
