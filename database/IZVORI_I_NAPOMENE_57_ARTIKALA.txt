@@ -1,0 +1,16 @@
+IZVORI / OGRANIČENJA KATALOGA
+
+Ovo je početni demo uvoz za testiranje prikaza i povezivanja baze, ne verifikovan prodajni cenovnik.
+
+Proizvodi/cene koji imaju javno vidljiv regionalni izvor:
+- ROCA: Interprom, pregled ROCA sanitarija i objavljene cene: https://www.interprom.rs/index.php/sanitarije/roca-spanija.html
+- COPEN Slate tuš kade: Ivanović Impeks, objavljene varijante i cene: https://ivanovicimpeks.rs/product-category/salon-keramike/tus-kabine-kade-i-paravani/
+- Roca cenovnik (referenca za artikle i tehničke podatke; cenovnik datiran 01.08.2025, proveriti noviji pre prodaje): https://merkurimpex.rs/wp-content/uploads/2025/08/Roca-Sanitarija-cenovnik-sa-slikama-komplet-Mart-2025.pdf
+- Zorka Keramika: zvanični katalog/serije: https://sr.zorka-keramika.rs/tiles/
+- Ideal Standard: zvanični cenovnik 2026: https://www.idealstandard.rs/dfsmedia/9e07a8a15f014cab9f19c3786cffba89/2279089-source
+- Pamesa kolekcije/katalozi: https://www.keramikajovanovic.rs/katalog/
+
+VAŽNO:
+- Nisu sve stavke i cene u SQL-u potvrđene kao aktuelni komercijalni artikli. Za brendove bez pouzdanog javnog cenovnika korišćeni su generički primeri i indikativne cene.
+- Sve 57 slike u media/products/demo/ su originalne ilustrativne SVG slike za demo prikaz, nisu zvanične fotografije ili renderi proizvođača.
+- Pre javnog objavljivanja treba zameniti demo slike stvarnim fotografijama, potvrditi tačne šifre artikala, specifikacije, jedinice prodaje, PDV i veleprodajne/maloprodajne cene sa dobavljačem.

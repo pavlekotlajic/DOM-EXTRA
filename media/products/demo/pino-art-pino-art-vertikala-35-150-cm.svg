@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="300" viewBox="0 0 260 300">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4f1eb"/><stop offset="1" stop-color="#e4dfd5"/></linearGradient></defs>
+<rect width="260" height="300" fill="url(#bg)"/><circle cx="222" cy="38" r="18" fill="#262626" opacity=".5"/>
+<rect x="55" y="70" width="150" height="120" rx="4" fill="#bca78e" stroke="#8f7c66" stroke-width="4"/><rect x="65" y="80" width="62" height="100" fill="#d7c6af"/><rect x="133" y="80" width="62" height="100" fill="#d7c6af"/><circle cx="117" cy="130" r="3" fill="#6e5b48"/><circle cx="143" cy="130" r="3" fill="#6e5b48"/><text x="130" y="238" font-family="Arial,sans-serif" font-size="11" text-anchor="middle" fill="#5b554e" letter-spacing="2">PINO ART</text><text x="130" y="260" font-family="Arial,sans-serif" font-size="10" text-anchor="middle" fill="#71685e">PINO ART vertikala 35×150 cm</text></svg>

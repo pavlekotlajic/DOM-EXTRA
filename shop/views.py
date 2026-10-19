@@ -1,4 +1,5 @@
 import json
+import csv
 import mimetypes
 import secrets
 import uuid
@@ -426,6 +427,23 @@ def api_dispatch(request, subpath=''):
     path = '/' + subpath.strip('/')
     method = request.method
     try:
+        if method == 'GET' and path == '/prices':
+            # Export the live SQL catalog, optionally filtered by group name or slug.
+            from io import StringIO
+            output = StringIO()
+            writer = csv.writer(output)
+            writer.writerow(['ID', 'SKU', 'Naziv', 'Kategorija', 'Brend', 'Jedinica', 'Cena MP (RSD)', 'Cena VP (RSD)', 'Stanje', 'Barkod'])
+            qs = Product.objects.select_related('group').all().order_by('group__name', 'name')
+            group_filter = text(request.GET.get('kategorija'))
+            if group_filter:
+                from django.utils.text import slugify
+                qs = [p for p in qs if slugify(p.group_id) == group_filter or p.group_id == group_filter]
+            for p in qs:
+                writer.writerow([p.id, p.sku, p.name, p.group_id, p.brand or '', p.unit or '', p.mp_price, p.vp_price, p.stock, p.barcode or ''])
+            response = HttpResponse('\ufeff' + output.getvalue(), content_type='text/csv; charset=utf-8')
+            response['Content-Disposition'] = 'attachment; filename="dom-extra-cenovnik.csv"'
+            return response
+
         if method == 'GET' and path == '/health':
             return JsonResponse({'ok': True, 'time': timezone.now().isoformat()})
 

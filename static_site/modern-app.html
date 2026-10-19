@@ -1,0 +1,70 @@
+<!doctype html><html lang="sr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="DOM EXTRA — kupatilo, keramika i oprema za vaš prostor."><title>DOM EXTRA — prostor za vaše ideje</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/assets/dom-extra-react-migration.css?v=20261019-category-mobile-fix"><link rel="stylesheet" href="/assets/dom-extra-final-ui-fix.css?v=20261019-category-mobile-fix">
+
+<style id="dom-extra-logo-image-fix">
+.brand-logo-image{display:block;width:84px;height:84px;max-width:100%;object-fit:contain;flex:0 0 auto;border:0;border-radius:0;box-shadow:none}
+.site-header .wordmark,.site-header .de-logo,.de-header .de-logo{display:flex!important;align-items:center;justify-content:flex-start;gap:0;min-width:84px;width:84px;height:84px;padding:0!important;margin:0!important;line-height:0!important;font-size:0!important;letter-spacing:0!important;text-decoration:none!important;overflow:visible}
+.site-header .wordmark .brand-logo-image,.site-header .de-logo .brand-logo-image,.de-header .de-logo .brand-logo-image{width:84px;height:84px}
+.site-footer .wordmark{display:inline-flex;align-items:center;width:auto;height:auto;min-width:0;font-size:0!important;line-height:0}
+.site-footer .wordmark .brand-logo-image{width:54px;height:54px}
+.de-footer-logo .brand-logo-image{width:54px;height:54px}
+@media(max-width:760px){.site-header .wordmark,.site-header .de-logo,.de-header .de-logo{width:64px;height:64px;min-width:64px}.site-header .wordmark .brand-logo-image,.site-header .de-logo .brand-logo-image,.de-header .de-logo .brand-logo-image{width:64px;height:64px}}
+</style>
+
+<style id="domextra-menu-overlay-fix">
+@media(max-width:1120px){
+  header.site-header .mobile-menu{display:flex!important;visibility:visible!important;align-items:center!important;justify-content:center!important;width:44px!important;height:44px!important;min-width:44px!important;background:#fff!important;color:#24231f!important;border:1px solid #ad7959!important;border-radius:4px!important;font-size:25px!important;position:relative!important;z-index:2147483001!important}
+  #domextra-mobile-menu-overlay{display:none;position:fixed;inset:0;z-index:2147483000;background:rgba(0,0,0,.28)}
+  #domextra-mobile-menu-overlay.is-open{display:block}
+  #domextra-mobile-menu-overlay .domextra-menu-panel{position:absolute;top:0;right:0;width:min(86vw,360px);height:100%;box-sizing:border-box;padding:84px 22px 28px;background:#fbfaf7;color:#24231f;box-shadow:-12px 0 32px rgba(0,0,0,.22);overflow-y:auto}
+  #domextra-mobile-menu-overlay .domextra-menu-close{position:absolute;top:18px;right:18px;width:44px;height:44px;border:1px solid #ad7959;border-radius:4px;background:#fff;color:#24231f;font-size:25px}
+  #domextra-mobile-menu-overlay .domextra-menu-brand{font-size:12px;letter-spacing:.18em;font-weight:700;color:#9b6848;margin:0 0 22px}
+  #domextra-mobile-menu-overlay a{display:flex!important;align-items:center;min-height:52px;width:100%;box-sizing:border-box;padding:14px 4px!important;color:#24231f!important;background:transparent!important;font-size:16px!important;line-height:1.4!important;font-weight:650!important;text-decoration:none!important;border-bottom:1px solid #e5dbd2!important;visibility:visible!important;opacity:1!important}
+  #domextra-mobile-menu-overlay a:last-child{border-bottom:0!important}
+  body.domextra-menu-open{overflow:hidden!important}
+}
+@media(min-width:1121px){#domextra-mobile-menu-overlay{display:none!important}}
+</style>
+</head><body><div id="app"><header class="site-header"><a href="/" class="wordmark"><img class="brand-logo-image" src="/assets/dom-extra-logo.png" alt="DOM EXTRA" /></a><nav class="desktop-nav"><a href="/">Početna</a><a href="/o-nama">O nama</a><a href="/proizvodi">Kategorije</a><a href="/brendovi">Brendovi</a><a href="/katalozi">Katalozi</a><a href="/b2b">B2B portal</a><a href="/kontakt">Kontakt</a></nav><div class="header-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Promeni temu" title="Promeni svetlu/tamnu temu">☼ Svetla tema</button><a href="/proizvodi" aria-label="Pretraga">⌕</a><a class="header-cart-link" href="/korpa/" aria-label="Otvori korpu" title="Korpa"><svg class="header-cart-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 1.9-1.4L22 8H6"/><circle cx="10" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg></a><button class="mobile-menu" id="mobileToggle">☰</button></div></header><main id="main"><div class="page-body">Učitavanje DOM EXTRA…</div></main><footer class="site-footer"><a href="/" class="wordmark"><img class="brand-logo-image" src="/assets/dom-extra-logo.png" alt="DOM EXTRA" /></a><span>© 2026 DOM EXTRA</span><a href="/privatnost">Privatnost i kolačići</a><a href="/web-shop/">Web Shop</a><a href="/b2b">B2B portal</a></footer></div><div class="toast-area" id="toast"></div><script src="/assets/dom-extra-migration.js?v=20261019-remove-catalog-note"></script>
+<script id="domextra-menu-overlay-fix-js">
+(function(){
+  function init(){
+    var header=document.querySelector('header.site-header');
+    if(!header)return;
+    var button=header.querySelector('.mobile-menu');
+    var source=header.querySelector('nav.desktop-nav');
+    if(!button||!source)return;
+    if(document.getElementById('domextra-mobile-menu-overlay'))return;
+    var overlay=document.createElement('div');
+    overlay.id='domextra-mobile-menu-overlay';
+    overlay.innerHTML='<div class="domextra-menu-panel" role="dialog" aria-modal="true" aria-label="Glavni meni"><button type="button" class="domextra-menu-close" aria-label="Zatvori meni">×</button><div class="domextra-menu-brand">DOM EXTRA</div><nav aria-label="Glavna navigacija"></nav></div>';
+    var dest=overlay.querySelector('nav');
+    Array.prototype.forEach.call(source.querySelectorAll('a'),function(a){
+      var copy=document.createElement('a');copy.href=a.getAttribute('href')||a.href;copy.textContent=(a.textContent||'').trim();
+      if(copy.textContent)dest.appendChild(copy);
+    });
+    document.body.appendChild(overlay);
+    var close=overlay.querySelector('.domextra-menu-close');
+    function setOpen(open){
+      overlay.classList.toggle('is-open',open);
+      document.body.classList.toggle('domextra-menu-open',open);
+      button.textContent=open?'×':'☰';
+      button.setAttribute('aria-expanded',open?'true':'false');
+      button.setAttribute('aria-label',open?'Zatvori meni':'Otvori meni');
+    }
+    button.type='button';button.setAttribute('aria-controls',overlay.id);setOpen(false);
+    // Capture at document level so legacy handlers cannot interfere with the menu.
+    document.addEventListener('click',function(e){
+      if(e.target===button||button.contains(e.target)){
+        e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+        setOpen(!overlay.classList.contains('is-open'));
+      }
+    },true);
+    close.addEventListener('click',function(){setOpen(false);});
+    overlay.addEventListener('click',function(e){if(e.target===overlay)setOpen(false);});
+    dest.addEventListener('click',function(e){if(e.target.closest('a'))setOpen(false);});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false);});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+</body></html>

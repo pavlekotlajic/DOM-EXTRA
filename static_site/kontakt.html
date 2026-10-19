@@ -7,7 +7,7 @@
 <meta name="description" content="DOM EXTRA — distributer opreme za dom: sanitarija, keramika, grejanje i bela tehnika. Web shop i B2B portal.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..900&family=Roboto+Condensed:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="/assets/style.css?v=20261019-category-mobile-fix">
 
 
 <meta name="robots" content="index,follow">
@@ -16,10 +16,35 @@
 <meta property="og:title" content="Kontakt — DOM EXTRA">
 <meta property="og:description" content="DOM EXTRA — distributer opreme za dom: sanitarija, keramika, grejanje i bela tehnika. Web shop i B2B portal.">
 <meta property="og:url" content="/kontakt/">
+
+<style id="dom-extra-logo-image-fix">
+.brand-logo-image{display:block;width:84px;height:84px;max-width:100%;object-fit:contain;flex:0 0 auto;border:0;border-radius:0;box-shadow:none}
+.site-header .wordmark,.site-header .de-logo,.de-header .de-logo{display:flex!important;align-items:center;justify-content:flex-start;gap:0;min-width:84px;width:84px;height:84px;padding:0!important;margin:0!important;line-height:0!important;font-size:0!important;letter-spacing:0!important;text-decoration:none!important;overflow:visible}
+.site-header .wordmark .brand-logo-image,.site-header .de-logo .brand-logo-image,.de-header .de-logo .brand-logo-image{width:84px;height:84px}
+.site-footer .wordmark{display:inline-flex;align-items:center;width:auto;height:auto;min-width:0;font-size:0!important;line-height:0}
+.site-footer .wordmark .brand-logo-image{width:54px;height:54px}
+.de-footer-logo .brand-logo-image{width:54px;height:54px}
+@media(max-width:760px){.site-header .wordmark,.site-header .de-logo,.de-header .de-logo{width:64px;height:64px;min-width:64px}.site-header .wordmark .brand-logo-image,.site-header .de-logo .brand-logo-image,.de-header .de-logo .brand-logo-image{width:64px;height:64px}}
+</style>
+
+<style id="domextra-menu-overlay-fix">
+@media(max-width:1120px){
+  header.site-header .mobile-menu{display:flex!important;visibility:visible!important;align-items:center!important;justify-content:center!important;width:44px!important;height:44px!important;min-width:44px!important;background:#fff!important;color:#24231f!important;border:1px solid #ad7959!important;border-radius:4px!important;font-size:25px!important;position:relative!important;z-index:2147483001!important}
+  #domextra-mobile-menu-overlay{display:none;position:fixed;inset:0;z-index:2147483000;background:rgba(0,0,0,.28)}
+  #domextra-mobile-menu-overlay.is-open{display:block}
+  #domextra-mobile-menu-overlay .domextra-menu-panel{position:absolute;top:0;right:0;width:min(86vw,360px);height:100%;box-sizing:border-box;padding:84px 22px 28px;background:#fbfaf7;color:#24231f;box-shadow:-12px 0 32px rgba(0,0,0,.22);overflow-y:auto}
+  #domextra-mobile-menu-overlay .domextra-menu-close{position:absolute;top:18px;right:18px;width:44px;height:44px;border:1px solid #ad7959;border-radius:4px;background:#fff;color:#24231f;font-size:25px}
+  #domextra-mobile-menu-overlay .domextra-menu-brand{font-size:12px;letter-spacing:.18em;font-weight:700;color:#9b6848;margin:0 0 22px}
+  #domextra-mobile-menu-overlay a{display:flex!important;align-items:center;min-height:52px;width:100%;box-sizing:border-box;padding:14px 4px!important;color:#24231f!important;background:transparent!important;font-size:16px!important;line-height:1.4!important;font-weight:650!important;text-decoration:none!important;border-bottom:1px solid #e5dbd2!important;visibility:visible!important;opacity:1!important}
+  #domextra-mobile-menu-overlay a:last-child{border-bottom:0!important}
+  body.domextra-menu-open{overflow:hidden!important}
+}
+@media(min-width:1121px){#domextra-mobile-menu-overlay{display:none!important}}
+</style>
 </head>
 <body class="page-kontakt">
 <nav class="de-nav">
-  <a href="/" class="de-logo">DOM <span>EXTRA</span></a>
+  <a href="/" class="de-logo"><img class="brand-logo-image" src="/assets/dom-extra-logo.png" alt="DOM EXTRA" /></a>
   <ul class="de-nav-links">
     <li><a href="/#brendovi">Brendovi</a></li>
     <li><a href="/#kategorije">Kategorije</a></li>
@@ -30,7 +55,7 @@
   </ul>
   <div class="de-nav-actions">
     <a class="de-btn-b2b" href="/b2b/">B2B Pristup</a>
-    <a class="de-cart-btn" href="/web-shop/" aria-label="Korpa">🛒<span class="de-cart-count hidden" id="deCartCount">0</span></a>
+    <a class="de-cart-btn" href="/web-shop/" aria-label="Korpa"><svg class="de-cart-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M3 3h2l2.2 11.2a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 2-1.6L22 7H6"/><circle cx="10" cy="20" r="1.2"/><circle cx="19" cy="20" r="1.2"/></svg><span class="de-cart-count hidden" id="deCartCount">0</span></a>
     <div class="de-hamb" onclick="document.getElementById('deMobileNav').classList.add('open')"><span></span><span></span><span></span></div>
   </div>
 </nav>
@@ -109,7 +134,7 @@
 <footer class="de-footer">
   <div class="de-footer-grid">
     <div>
-      <div class="de-footer-logo">DOM EXTRA</div>
+      <img class="brand-logo-image" src="/assets/dom-extra-logo.png" alt="DOM EXTRA" />
       <p class="de-footer-desc">Vaš pouzdani distributer premium opreme za dom. Ovlašćeni zastupnik vodećih svetskih brendova.</p>
       <div class="de-social-row">
         <a class="de-social-link ig" href="https://instagram.com/domextra" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
@@ -147,5 +172,48 @@
 <script src="/assets/app.js?v=20261003-final6" defer></script>
 <script src="/assets/backend-bridge.js?v=20261003-final6" defer></script>
 <script src="/assets/cart-runtime.js?v=20261003-final6" defer></script>
+
+<script id="domextra-menu-overlay-fix-js">
+(function(){
+  function init(){
+    var header=document.querySelector('header.site-header');
+    if(!header)return;
+    var button=header.querySelector('.mobile-menu');
+    var source=header.querySelector('nav.desktop-nav');
+    if(!button||!source)return;
+    if(document.getElementById('domextra-mobile-menu-overlay'))return;
+    var overlay=document.createElement('div');
+    overlay.id='domextra-mobile-menu-overlay';
+    overlay.innerHTML='<div class="domextra-menu-panel" role="dialog" aria-modal="true" aria-label="Glavni meni"><button type="button" class="domextra-menu-close" aria-label="Zatvori meni">×</button><div class="domextra-menu-brand">DOM EXTRA</div><nav aria-label="Glavna navigacija"></nav></div>';
+    var dest=overlay.querySelector('nav');
+    Array.prototype.forEach.call(source.querySelectorAll('a'),function(a){
+      var copy=document.createElement('a');copy.href=a.getAttribute('href')||a.href;copy.textContent=(a.textContent||'').trim();
+      if(copy.textContent)dest.appendChild(copy);
+    });
+    document.body.appendChild(overlay);
+    var close=overlay.querySelector('.domextra-menu-close');
+    function setOpen(open){
+      overlay.classList.toggle('is-open',open);
+      document.body.classList.toggle('domextra-menu-open',open);
+      button.textContent=open?'×':'☰';
+      button.setAttribute('aria-expanded',open?'true':'false');
+      button.setAttribute('aria-label',open?'Zatvori meni':'Otvori meni');
+    }
+    button.type='button';button.setAttribute('aria-controls',overlay.id);setOpen(false);
+    // Capture at document level so legacy handlers cannot interfere with the menu.
+    document.addEventListener('click',function(e){
+      if(e.target===button||button.contains(e.target)){
+        e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+        setOpen(!overlay.classList.contains('is-open'));
+      }
+    },true);
+    close.addEventListener('click',function(){setOpen(false);});
+    overlay.addEventListener('click',function(e){if(e.target===overlay)setOpen(false);});
+    dest.addEventListener('click',function(e){if(e.target.closest('a'))setOpen(false);});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false);});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
 </body>
 </html>

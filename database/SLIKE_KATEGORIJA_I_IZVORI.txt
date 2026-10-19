@@ -1,0 +1,19 @@
+DOM EXTRA — slike po kategorijama
+
+Ažuriranje frontend-a koristi reprezentativne fotografije sa Pexels-a za DEMO- proizvode. Fotografije se učitavaju direktno sa interneta (nisu kopirane u lokalni media folder), zato je internet potreban da bi se prikazale. To su fotografije kategorije/prostora, ne potvrđene fotografije tačnog modela ili brenda.
+
+Lokalni ključevi u static_site/assets/dom-extra-migration.js: wc, kada, lavabo, baterija, tus, plocice, radijator, kupatilski_namestaj, bojler, instalacije.
+
+Izvori Pexels stranica:
+WC: https://www.pexels.com/photo/close-up-of-modern-white-toilet-in-wc-7545637/
+Kada/kupatilo: https://www.pexels.com/photo/white-ceramic-bathtub-with-stainless-steel-faucet-6969997/
+Lavabo: https://www.pexels.com/photo/white-ceramic-sink-with-faucet-10833566/
+Baterija: https://www.pexels.com/photo/stainless-steel-faucet-on-white-ceramic-sink-13963752/
+Tuš: https://www.pexels.com/photo/shower-in-a-bathroom-19916744/
+Pločice/sanitarni prostor: https://www.pexels.com/photo/interior-of-bathroom-with-tiled-walls-and-floor-7534182/
+Radijator/peškir grejač: https://www.pexels.com/photo/white-towel-on-white-wooden-rack-3609985/
+Kupatilski nameštaj: https://www.pexels.com/photo/contemporary-shower-room-interior-with-washstand-in-house-6436771/
+Bojler/grejanje (ilustrativna kategorijska fotografija): https://www.pexels.com/photo/modern-bathroom-interior-with-shower-and-washing-machine-29252628/
+Instalacije/baterije: https://www.pexels.com/photo/stainless-steel-faucet-mounted-on-ceramic-tiles-8925979/
+
+Pexels navodi ove stranice kao besplatne za korišćenje. Proverite aktuelne uslove licence pre komercijalne objave. Za proizvode koji se prodaju kao tačan model preporučljivo je kasnije zameniti kategorijsku fotografiju zvaničnom fotografijom tog modela.
