@@ -50,26 +50,44 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = []
 WSGI_APPLICATION = "config.wsgi.application"
 
+
 DB_ENGINE = os.getenv(
     "DB_ENGINE",
     "django.db.backends.postgresql"
 )
 
-DATABASES = {
-    "default": {
-        "ENGINE": DB_ENGINE,
-        "NAME": os.getenv("DB_NAME", "domextra"),
-        "USER": os.getenv("DB_USER", "root"),
-        "PASSWORD": os.getenv("DB_PASSWORD", "root"),
-        "HOST": os.getenv("DB_HOST", "127.0.0.1"),
-        "PORT": os.getenv("DB_PORT", "5432"),
-        "OPTIONS": (
-            {"charset": "utf8mb4"}
-            if "mysql" in DB_ENGINE
-            else {}
-        ),
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL:
+    import dj_database_url
+
+    DATABASES = {
+        "default": dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": DB_ENGINE,
+            "NAME": os.getenv("DB_NAME", "domextra"),
+            "USER": os.getenv("DB_USER", "root"),
+            "PASSWORD": os.getenv("DB_PASSWORD", "root"),
+            "HOST": os.getenv("DB_HOST", "127.0.0.1"),
+            "PORT": os.getenv(
+                "DB_PORT",
+                "5432" if "postgresql" in DB_ENGINE else "3306"
+            ),
+            "OPTIONS": (
+                {"charset": "utf8mb4"}
+                if "mysql" in DB_ENGINE
+                else {}
+            ),
+        }
+    }
+
 
 LANGUAGE_CODE = "sr"
 TIME_ZONE = "Europe/Belgrade"
